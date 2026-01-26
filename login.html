@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimePet - Admin Login</title>
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-tertiary);
+        }
+        .login-card {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .error-message {
+            color: var(--danger-color);
+            margin-top: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
+            <img src="images/logo.svg" alt="Logo">
+            <span class="logo-text">Admin Login</span>
+        </div>
+        <form id="loginForm">
+            <div class="form-group" style="text-align: left;">
+                <label for="password" class="form-label">Passwort</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Anmelden</button>
+            <p id="errorMessage" class="error-message">Falsches Passwort. Bitte erneut versuchen.</p>
+        </form>
+    </div>
+    <script>
+        // Der Code wird direkt hier eingefügt, um Caching- und Ladeprobleme zu 100% auszuschließen.
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('errorMessage');
+            const correctPassword = 'admin';
+
+            function attemptLogin() {
+                localStorage.setItem('primepet_isAdmin', 'true');
+                window.location.href = 'admin.html';
+            }
+
+            function showLoginError() {
+                if (errorMessage) errorMessage.style.display = 'block';
+                if (passwordInput) passwordInput.classList.add('error');
+                const card = document.querySelector('.login-card');
+                if (card) {
+                    card.classList.add('error');
+                    setTimeout(() => card.classList.remove('error'), 500);
+                }
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    if (passwordInput.value.trim() === correctPassword) {
+                        attemptLogin();
+                    } else {
+                        showLoginError();
+                    }
+                });
+            }
+
+            if (passwordInput) {
+                passwordInput.addEventListener('input', () => {
+                    if (passwordInput.value.trim() === correctPassword) {
+                        attemptLogin();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>PrimePet - Premium Haustierbedarf Online | Futter, Spielzeug & Zubehör</title>
+    <meta name="description" content="PrimePet - Ihr Premium Online-Shop für hochwertiges Haustierbedarf. Über 500 Produkte für Hunde, Katzen, Vögel & Kleintiere. Kostenloser Versand ab 49€. Jetzt entdecken!">
+    <meta name="keywords" content="Haustierbedarf, Tierbedarf online, Hundefutter, Katzenfutter, Spielzeug für Haustiere, Tierbedarf Shop, Premium Tiernahrung, Haustierzubehör">
+    <meta name="author" content="PrimePet">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="German">
+    <meta name="revisit-after" content="7 days">
+    <meta name="rating" content="general">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.primepet.de/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+    <link rel="apple-touch-icon" href="images/logo.svg">
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.primepet.de/">
+    <meta property="og:title" content="PrimePet - Premium Haustierbedarf Online">
+    <meta property="og:description" content="Entdecken Sie über 500 hochwertige Produkte für Hunde, Katzen, Vögel und Kleintiere. Kostenloser Versand ab 49€. Premium Qualität garantiert.">
+    <meta property="og:image" content="https://www.primepet.de/HERO.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="PrimePet">
+    <meta property="og:locale" content="de_DE">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.primepet.de/">
+    <meta name="twitter:title" content="PrimePet - Premium Haustierbedarf Online">
+    <meta name="twitter:description" content="Über 500 hochwertige Produkte für Ihre Haustiere. Kostenloser Versand ab 49€.">
+    <meta name="twitter:image" content="https://www.primepet.de/HERO.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- AOS Animation Library für professionelle Scroll-Effekte -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="Logo" class="logo-icon">
+                    <img src="PrimePet.png" alt="PrimePet Logo" class="logo-text-img">
+                </div>
+
+                <nav class="nav" id="nav">
+                    <ul class="nav-list">
+                        <li><a href="#home" class="nav-link">Home</a></li>
+                        <li><a href="#categories" class="nav-link">Kategorien</a></li>
+                        <li><a href="#products" class="nav-link">Produkte</a></li>
+                        <li><a href="#testimonials" class="nav-link">Bewertungen</a></li>
+                        <li><a href="#contact" class="nav-link">Kontakt</a></li>
+                    </ul>
+                </nav>
+
+                <div class="header-actions">
+                    <button class="wishlist-btn header-icon-btn" id="wishlistBtn" aria-label="Wunschliste öffnen">
+                        <i class="far fa-heart"></i>
+                        <span class="wishlist-badge" id="wishlistBadge">0</span>
+                    </button>
+                    <button class="cart-btn header-icon-btn" id="cartBtn" aria-label="Warenkorb öffnen">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </button>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menü öffnen">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Der Titel ist jetzt Teil des Hintergrundbildes für einen emotionaleren Look. -->
+                <!-- Die Call-to-Action Buttons bleiben zentral für die Nutzerführung. -->
+                <div class="hero-cta" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#products" class="btn btn-primary">Jetzt entdecken</a>
+                    <a href="#categories" class="btn btn-secondary">Kategorien ansehen</a>
+                </div>
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat">
+                        <span class="stat-number">10.000+</span>
+                        <span class="stat-label">Zufriedene Kunden</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Premium Produkte</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Kundenservice</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-aos="fade-up">Entdecken Sie unsere Kategorien</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Alles was Ihr Haustier braucht, an einem Ort</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card" data-category="hunde" data-aos="fade-up" data-aos-delay="0">
+                    <div class="category-icon">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <h3 class="category-title">Hunde</h3>
+                    <p class="category-description">Futter, Spielzeug & Zubehör</p>
+                    <button class="category-btn" data-filter="hunde">Entdecken</button>
+                </div>
+                <div class="category-card" data-category="katzen" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-icon">
+                        <i class="fas fa-cat"></i>
+                    </div>
+                    <h3 class="category-title">Katzen</h3>
+                    <p class="category-description">Kratzbäume, Futter & Pflege</p>
+                    <button class="category-btn" data-filter="katzen">Entdecken</button>
+                </div>
+                <div class="category-card" data-category="vögel" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-icon">
+                        <i class="fas fa-dove"></i>
+                    </div>
+                    <h3 class="category-title">Vögel</h3>
+                    <p class="category-description">Käfige, Futter & Zubehör</p>
+                    <button class="category-btn" data-filter="vögel">Entdecken</button>
+                </div>
+                <div class="category-card" data-category="kleintiere" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-icon">
+                        <i class="fas fa-otter"></i>
+                    </div>
+                    <h3 class="category-title">Kleintiere</h3>
+                    <p class="category-description">Gehege, Futter & Spielzeug</p>
+                    <button class="category-btn" data-filter="kleintiere">Entdecken</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-aos="fade-up">Unsere Top-Produkte</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Handverlesene Premium-Artikel für Ihre Lieblinge</p>
+            </div>
+
+            <div class="products-filter">
+                <button class="filter-btn active" data-filter="alle">Alle Produkte</button>
+                <button class="filter-btn" data-filter="hunde">Hunde</button>
+                <button class="filter-btn" data-filter="katzen">Katzen</button>
+                <button class="filter-btn" data-filter="vögel">Vögel</button>
+                <button class="filter-btn" data-filter="kleintiere">Kleintiere</button>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically inserted here via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-aos="fade-up">Was unsere Kunden sagen</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Tausende zufriedene Tierbesitzer vertrauen uns</p>
+            </div>
+
+            <div class="testimonials-carousel" id="testimonialsCarousel">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Absolut begeistert! Die Qualität der Produkte ist hervorragend und mein Hund liebt sein neues Spielzeug. Der Versand war super schnell!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 class="author-name">Sarah M.</h4>
+                            <p class="author-product">Premium Hundespielzeug-Set</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Meine Katze ist wählerisch, aber das Futter von PrimePet liebt sie! Toller Kundenservice und faire Preise."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 class="author-name">Michael K.</h4>
+                            <p class="author-product">Bio Katzenfutter Premium</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Endlich ein Shop, der hält was er verspricht! Hochwertige Produkte und super Beratung. Absolut empfehlenswert!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4 class="author-name">Julia R.</h4>
+                            <p class="author-product">Kratzbaum Deluxe XXL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn prev" id="prevTestimonial" aria-label="Vorheriges">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" id="nextTestimonial" aria-label="Nächstes">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Badges Section -->
+    <section class="trust-badges">
+        <div class="container">
+            <div class="badges-grid">
+                <div class="badge-item" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="badge-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3 class="badge-title">Kostenloser Versand</h3>
+                    <p class="badge-text">Ab 49€ Bestellwert</p>
+                </div>
+                <div class="badge-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="badge-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="badge-title">100% Garantie</h3>
+                    <p class="badge-text">30 Tage Geld zurück</p>
+                </div>
+                <div class="badge-item" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="badge-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="badge-title">24/7 Support</h3>
+                    <p class="badge-text">Immer für Sie da</p>
+                </div>
+                <div class="badge-item" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="badge-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3 class="badge-title">Premium Qualität</h3>
+                    <p class="badge-text">Geprüfte Produkte</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="logo.png" alt="Logo" class="logo-icon">
+                        <img src="PrimePet.png" alt="PrimePet Logo" class="logo-text-img">
+                    </div>
+                    <p class="footer-description">
+                        Ihr vertrauensvoller Partner für hochwertiges Haustierbedarf.
+                        Wir bieten nur das Beste für Ihre Lieblinge.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-title">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#products">Alle Produkte</a></li>
+                        <li><a href="#categories">Kategorien</a></li>
+                        <li><a href="#">Angebote</a></li>
+                        <li><a href="#">Neuheiten</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-title">Kundenservice</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Kontakt</a></li>
+                        <li><a href="#">Versand & Lieferung</a></li>
+                        <li><a href="#">Rückgabe & Umtausch</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-title">Rechtliches</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">AGB</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                        <li><a href="#">Impressum</a></li>
+                        <li><a href="#">Widerrufsrecht</a></li>
+                        <li><a href="login.html" style="color: var(--primary-light);"><i class="fas fa-lock"></i> Admin Login</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 PrimePet. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-overlay" id="cartOverlay"></div>
+        <div class="cart-sidebar">
+            <div class="cart-header">
+                <h2 class="cart-title">Warenkorb</h2>
+                <button class="cart-close" id="cartClose" aria-label="Warenkorb schließen">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Gesamtsumme:</span>
+                    <span class="total-price" id="totalPrice">0,00 €</span>
+                </div>
+                <button class="btn btn-primary btn-block" id="checkoutBtn">Zur Kasse</button>
+                <button class="btn btn-secondary btn-block" id="clearCartBtn">Warenkorb leeren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="modal-overlay" id="checkoutOverlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Bestellung abschließen</h2>
+                <button class="modal-close" id="checkoutClose" aria-label="Schließen">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form class="checkout-form" id="checkoutForm">
+                    <div class="form-section">
+                        <h3 class="form-section-title">Persönliche Daten</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">Vorname</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Nachname</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">Lieferadresse</h3>
+                        <div class="form-group">
+                            <label for="address">Straße & Hausnummer</label>
+                            <input type="text" id="address" name="address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="zipCode">PLZ</label>
+                                <input type="text" id="zipCode" name="zipCode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Stadt</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">Zahlungsmethode</h3>
+                        <div class="payment-methods">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="kreditkarte">
+                                <span class="payment-label">
+                                    <i class="fas fa-credit-card"></i>
+                                    Kreditkarte
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="paypal" checked>
+                                <span class="payment-label">
+                                    <i class="fab fa-paypal"></i>
+                                    PayPal
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="rechnung">
+                                <span class="payment-label">
+                                    <i class="fas fa-file-invoice"></i>
+                                    Rechnung
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- PayPal Button Container -->
+                        <div id="paypal-button-container" style="margin-top: 1.5rem; display: block;"></div>
+
+                        <!-- Standard Submit Button (versteckt wenn PayPal aktiv) -->
+                        <button type="submit" id="standardCheckoutBtn" class="btn btn-primary btn-block" style="display: none; margin-top: 1.5rem;">
+                            Kostenpflichtig bestellen
+                        </button>
+                    </div>
+
+                    <div class="order-summary">
+                        <h3 class="form-section-title">Bestellübersicht</h3>
+                        <div class="summary-items" id="summaryItems">
+                            <!-- Order summary will be inserted here -->
+                        </div>
+                        <div class="summary-total">
+                            <span>Gesamtsumme:</span>
+                            <span class="total-amount" id="summaryTotal">0,00 €</span>
+                        </div>
+                    </div>
+
+                    <p class="checkout-notice" id="paymentNotice">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="noticeText">Sicher bezahlen mit PayPal - Käuferschutz inklusive</span>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="success-title">Bestellung erfolgreich!</h2>
+            <p class="success-message">
+                Vielen Dank für Ihre Bestellung. Sie erhalten in Kürze eine Bestätigungs-E-Mail.
+            </p>
+            <button class="btn btn-primary" id="successClose">Weiter einkaufen</button>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div class="wishlist-modal" id="wishlistModal">
+        <div class="modal-overlay" id="wishlistOverlay"></div>
+        <div class="wishlist-sidebar">
+            <div class="wishlist-header">
+                <h2 class="wishlist-title">
+                    <i class="fas fa-heart"></i>
+                    Meine Wunschliste
+                </h2>
+                <button class="wishlist-close" id="wishlistClose" aria-label="Wunschliste schließen">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="wishlist-items" id="wishlistItems">
+                <!-- Wishlist items will be dynamically inserted here -->
+            </div>
+
+            <div class="wishlist-footer">
+                <button class="btn btn-secondary btn-block" onclick="document.getElementById('wishlistModal').classList.remove('active'); document.body.style.overflow='';">
+                    Weiter einkaufen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-detail-modal" id="productDetailModal">
+        <div class="product-detail-overlay" onclick="closeProductDetail()"></div>
+        <div class="product-detail-content">
+            <button class="product-detail-close" onclick="closeProductDetail()" aria-label="Schließen">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="product-detail-grid">
+                <!-- Left Side: Media -->
+                <div class="product-detail-media" id="productDetailMedia">
+                    <!-- Image/Video will be inserted here -->
+                </div>
+
+                <!-- Right Side: Info -->
+                <div class="product-detail-info">
+                    <div class="product-detail-category" id="productDetailCategory"></div>
+                    <h2 class="product-detail-title" id="productDetailTitle"></h2>
+
+                    <div class="product-detail-rating-row">
+                        <div class="product-detail-rating" id="productDetailRating"></div>
+                        <span class="product-detail-reviews" id="productDetailReviews"></span>
+                    </div>
+
+                    <div class="product-detail-price" id="productDetailPrice"></div>
+
+                    <div class="product-detail-badge-container" id="productDetailBadge"></div>
+
+                    <div class="product-detail-description" id="productDetailDescription"></div>
+
+                    <div class="product-detail-actions">
+                        <button class="btn btn-primary btn-lg" id="productDetailAddToCart">
+                            <i class="fas fa-shopping-cart"></i>
+                            In den Warenkorb
+                        </button>
+                        <button class="btn btn-secondary btn-icon" id="productDetailWishlist" title="Zur Wunschliste hinzufügen">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+
+                    <div class="product-detail-features">
+                        <div class="feature-item">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <strong>Kostenloser Versand</strong>
+                                <p>Ab 49€ Bestellwert</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-undo"></i>
+                            <div>
+                                <strong>30 Tage Rückgaberecht</strong>
+                                <p>Kostenlose Rücksendung</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Sichere Zahlung</strong>
+                                <p>SSL-verschlüsselt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner (Professionell & Rechtlich wichtig) -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <i class="fas fa-cookie-bite"></i>
+            <p>Wir nutzen Cookies, um Ihr Einkaufserlebnis zu verbessern. <a href="#">Mehr erfahren</a></p>
+        </div>
+        <div class="cookie-actions">
+            <button class="btn btn-secondary" id="cookieDecline" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Ablehnen</button>
+            <button class="btn btn-primary" id="cookieAccept" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Akzeptieren</button>
+        </div>
+    </div>
+
+    <!-- Structured Data (Schema.org JSON-LD) for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "PetStore",
+        "name": "PrimePet",
+        "description": "Premium Online-Shop für hochwertiges Haustierbedarf. Über 500 Produkte für Hunde, Katzen, Vögel und Kleintiere.",
+        "url": "https://www.primepet.de",
+        "logo": "https://www.primepet.de/images/logo.svg",
+        "image": "https://www.primepet.de/HERO.png",
+        "priceRange": "€€",
+        "telephone": "+49-123-456789",
+        "email": "info@primepet.de",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Musterstraße 123",
+            "addressLocality": "Berlin",
+            "postalCode": "10115",
+            "addressCountry": "DE"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "00:00",
+            "closes": "23:59"
+        },
+        "paymentAccepted": ["Cash", "Credit Card", "PayPal"],
+        "currenciesAccepted": "EUR",
+        "areaServed": "DE",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "1247"
+        },
+        "sameAs": [
+            "https://www.facebook.com/primepet",
+            "https://www.instagram.com/primepet",
+            "https://twitter.com/primepet"
+        ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://www.primepet.de",
+        "name": "PrimePet",
+        "description": "Premium Haustierbedarf Online Shop",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.primepet.de/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "PrimePet",
+        "url": "https://www.primepet.de",
+        "logo": "https://www.primepet.de/images/logo.svg",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+49-123-456789",
+            "contactType": "Customer Service",
+            "areaServed": "DE",
+            "availableLanguage": ["German"]
+        }
+    }
+    </script>
+
+    <!-- PayPal SDK (Sandbox Mode for Testing) -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=EUR&locale=de_DE"></script>
+
+    <!-- JavaScript -->
+    <script src="js/performance.js"></script>
+
+    <!-- TEMPORÄRES SCRIPT: Alte Produkte löschen -->
+    <script>
+        console.log('🔄 Prüfe Produktliste...');
+        const storedProducts = localStorage.getItem('primepet_products');
+        if (storedProducts) {
+            const products = JSON.parse(storedProducts);
+            if (products.length > 0) {
+                console.log('⚠️ Alte Produkte gefunden - Lösche...');
+                localStorage.removeItem('primepet_products');
+                console.log('✅ Produktliste wurde geleert');
+            }
+        }
+    </script>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script src="js/email.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- AOS Initialization -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+
+    <!-- Initialize Performance Optimizations -->
+    <script>
+        initPerformance();
+    </script>
+
+</body>
+</html>

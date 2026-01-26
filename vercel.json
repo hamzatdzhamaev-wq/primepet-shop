@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "name": "primepet",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "." }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/products",
+      "dest": "/api/products.js"
+    },
+    {
+      "src": "/api/orders",
+      "dest": "/api/orders.js"
+    },
+    {
+      "src": "/api/tracking",
+      "dest": "/api/tracking.js"
+    },
+    {
+      "src": "/api/sync",
+      "dest": "/api/sync.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "CJ_API_KEY": "@cj_api_key"
+  }
+}

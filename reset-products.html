@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkte zurücksetzen - PrimePet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f9fafb;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #6366F1;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #6366F1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #4F46E5;
+        }
+        .success {
+            background: #10B981;
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            margin-top: 20px;
+            display: none;
+        }
+        .info {
+            background: #EFF6FF;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #6366F1;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 PrimePet Produkte zurücksetzen</h1>
+
+        <div class="info">
+            <strong>Hinweis:</strong> Diese Seite setzt alle Produktbilder zurück und lädt sie mit funktionierenden Bildern neu.
+        </div>
+
+        <button onclick="resetProducts()">✅ Produkte jetzt zurücksetzen</button>
+        <button onclick="clearAll()">🗑️ Alles löschen (LocalStorage komplett leeren)</button>
+        <button onclick="goToShop()">🏠 Zum Shop</button>
+
+        <div class="success" id="successMessage"></div>
+    </div>
+
+    <script>
+        function resetProducts() {
+            // Alle PrimePet-Daten löschen
+            localStorage.removeItem('primepet_products');
+            localStorage.removeItem('primepet_cart');
+            localStorage.removeItem('primepet_wishlist');
+
+            showSuccess('✅ Alle Produktdaten wurden zurückgesetzt! Bitte laden Sie jetzt die Hauptseite neu.');
+        }
+
+        function clearAll() {
+            // Komplett LocalStorage leeren
+            localStorage.clear();
+            showSuccess('✅ LocalStorage komplett geleert! Bitte laden Sie jetzt die Hauptseite neu.');
+        }
+
+        function goToShop() {
+            window.location.href = 'index.html';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

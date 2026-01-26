@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Vercel
+.vercel
+
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# PHP Files (nicht mehr benötigt)
+api/config.php
+api/CJDropshippingAPI.php
+api/import-products.php
+api/create-order.php
+api/tracking.php
+api/sync-stock.php
+api/test-connection.php
+
+# Cache & Logs
+api/cache/
+api/logs/
+data/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.log

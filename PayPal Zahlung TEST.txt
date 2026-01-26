@@ -1,0 +1,60 @@
+🚀 So funktioniert es:
+Kunde legt Produkte in den Warenkorb
+Klickt auf "Zur Kasse"
+Füllt persönliche Daten aus
+Wählt PayPal als Zahlungsmethode (vorausgewählt)
+Klickt auf den PayPal-Button
+Wird zu PayPal weitergeleitet (oder Login-Modal)
+Bezahlt mit PayPal-Konto oder Kreditkarte
+Wird zurück zum Shop geleitet
+Sieht Erfolgsbestätigung
+🔧 Vom Test- zum Live-Modus wechseln:
+Aktuell: Sandbox-Modus mit Test-Client-ID
+
+Für echte Zahlungen:
+
+PayPal Business Account erstellen (falls noch nicht vorhanden):
+
+Gehe zu https://www.paypal.com/de/business
+Client-ID holen:
+
+Gehe zu https://developer.paypal.com/dashboard/
+Navigiere zu "Apps & Credentials"
+Kopiere deine Live Client-ID
+In index.html ersetzen:
+
+
+<!-- Von: -->
+<script src="https://www.paypal.com/sdk/js?client-id=test&currency=EUR&locale=de_DE"></script>
+
+<!-- Zu: -->
+<script src="https://www.paypal.com/sdk/js?client-id=DEINE-LIVE-CLIENT-ID&currency=EUR&locale=de_DE"></script>
+📝 Test-Zahlungen durchführen:
+Mit der aktuellen Sandbox-Integration können Sie:
+
+✅ Den kompletten Checkout-Flow testen
+✅ PayPal-UI sehen und nutzen
+❌ Keine echten Zahlungen möglich (nur Sandbox)
+PayPal Sandbox-Testkonten erstellen:
+
+Gehe zu https://developer.paypal.com/dashboard/
+Erstelle Test-Käufer und Test-Verkäufer Accounts
+Nutze diese für Test-Zahlungen
+💰 Gebühren & Preise:
+PayPal nimmt für Transaktionen:
+
+2,49% + 0,35€ pro Transaktion (Deutschland)
+Keine monatlichen Gebühren
+Keine Setup-Gebühren
+🎨 Features der Integration:
+✅ Käuferschutz automatisch enthalten
+✅ Mobile-optimiert
+✅ Mehrere Währungen unterstützt (aktuell: EUR)
+✅ Kreditkarten-Zahlungen möglich (ohne PayPal-Konto)
+✅ Automatische Steuerung zwischen Zahlungsmethoden
+🔍 Testen Sie jetzt:
+Öffnen Sie index.html im Browser
+Fügen Sie Produkte zum Warenkorb hinzu
+Gehen Sie zur Kasse
+Füllen Sie die Daten aus
+Klicken Sie auf den PayPal-Button

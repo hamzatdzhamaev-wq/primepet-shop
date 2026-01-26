@@ -1,0 +1,542 @@
+/* ===================================
+   PrimePet - Animations Stylesheet
+   =================================== */
+
+/* Keyframe Animations */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade In Down Animation */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scale In Animation */
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Slide In Right Animation */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide In Left Animation */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Shake Animation */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* Spin Animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Glow Animation */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+    }
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===================================
+   Pet Animations
+   =================================== */
+
+.pet-dog {
+    animation: dogFloat 6s ease-in-out infinite;
+    transform-origin: center;
+}
+
+.pet-cat {
+    animation: catFloat 8s ease-in-out infinite;
+    transform-origin: center;
+}
+
+/* Add hover interactions */
+.pet-dog:hover {
+    animation: dogBounce 1s ease-in-out;
+}
+
+.pet-cat:hover {
+    animation: pulse 1s ease-in-out;
+}
+
+/* ===================================
+   Page Load Animations
+   =================================== */
+
+.hero-content {
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-title {
+    animation: fadeInDown 1s ease-out 0.2s both;
+}
+
+.hero-subtitle {
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-cta {
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.hero-stats {
+    animation: fadeInUp 1s ease-out 0.8s both;
+}
+
+/* ===================================
+   Scroll Animations (applied via JS)
+   =================================== */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scale-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ===================================
+   Category Cards Animation
+   =================================== */
+
+.category-card {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.category-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.category-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.category-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.category-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.category-icon {
+    transition: transform 0.3s ease-out;
+}
+
+.category-card:hover .category-icon {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* ===================================
+   Product Cards Animation
+   =================================== */
+
+.product-card {
+    transition: all 0.3s ease-out;
+}
+
+.product-card.visible {
+    animation: scaleIn 0.5s ease-out both;
+}
+
+/* Stagger animation for products */
+.product-card:nth-child(1) { animation-delay: 0.1s; }
+.product-card:nth-child(2) { animation-delay: 0.15s; }
+.product-card:nth-child(3) { animation-delay: 0.2s; }
+.product-card:nth-child(4) { animation-delay: 0.25s; }
+.product-card:nth-child(5) { animation-delay: 0.3s; }
+.product-card:nth-child(6) { animation-delay: 0.35s; }
+.product-card:nth-child(7) { animation-delay: 0.4s; }
+.product-card:nth-child(8) { animation-delay: 0.45s; }
+
+/* ===================================
+   Button Animations
+   =================================== */
+
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* ===================================
+   Cart Badge Animation
+   =================================== */
+
+.cart-badge {
+    animation: scaleIn 0.3s ease-out;
+}
+
+.cart-badge.update {
+    animation: pulse 0.5s ease-out;
+}
+
+/* ===================================
+   Modal Animations
+   =================================== */
+
+.cart-modal.active .cart-overlay {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.checkout-modal.active .modal-content,
+.success-modal.active .modal-content {
+    animation: scaleIn 0.4s ease-out;
+}
+
+/* ===================================
+   Testimonial Carousel Animation
+   =================================== */
+
+.testimonial-card {
+    transition: all 0.3s ease-out;
+}
+
+.testimonials-carousel {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* ===================================
+   Trust Badges Animation
+   =================================== */
+
+.badge-item {
+    animation: fadeInUp 0.6s ease-out both;
+}
+
+.badge-item:nth-child(1) { animation-delay: 0.1s; }
+.badge-item:nth-child(2) { animation-delay: 0.2s; }
+.badge-item:nth-child(3) { animation-delay: 0.3s; }
+.badge-item:nth-child(4) { animation-delay: 0.4s; }
+
+.badge-icon {
+    transition: transform 0.3s ease-out;
+}
+
+.badge-item:hover .badge-icon {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* ===================================
+   Loading Animation
+   =================================== */
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(99, 102, 241, 0.2);
+    border-top-color: #6366F1;
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+}
+
+/* ===================================
+   Success Icon Animation
+   =================================== */
+
+.success-icon {
+    animation: scaleIn 0.5s ease-out;
+}
+
+.success-icon i {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===================================
+   Add to Cart Animation
+   =================================== */
+
+@keyframes addToCart {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    75% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.add-to-cart-btn.adding {
+    animation: addToCart 0.5s ease-out;
+}
+
+/* ===================================
+   Header Scroll Animation
+   =================================== */
+
+.header {
+    transition: all 0.3s ease-out;
+}
+
+.header.scrolled {
+    animation: fadeInDown 0.3s ease-out;
+}
+/* ===================================
+   Filter Button Animation
+   =================================== */
+
+.filter-btn {
+    transition: all 0.3s ease-out;
+}
+
+.filter-btn.active {
+    animation: pulse 0.3s ease-out;
+}
+
+/* ===================================
+   Footer Links Hover Animation
+   =================================== */
+
+.footer-links a {
+    transition: all 0.3s ease-out;
+}
+
+/* ===================================
+   Form Input Focus Animation
+   =================================== */
+
+input:focus,
+textarea:focus,
+select:focus {
+    animation: glow 2s ease-in-out infinite;
+}
+
+/* ===================================
+   Social Links Animation
+   =================================== */
+
+.social-links a {
+    transition: all 0.3s ease-out;
+}
+
+.social-links a:hover {
+    animation: pulse 0.5s ease-out;
+}
+
+/* ===================================
+   Cart Item Add Animation
+   =================================== */
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cart-item {
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* ===================================
+   Remove Animation
+   =================================== */
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+}
+
+.cart-item.removing {
+    animation: slideOutRight 0.3s ease-out;
+}
+
+/* ===================================
+   Error Shake Animation
+   =================================== */
+
+.error {
+    animation: shake 0.5s ease-out;
+}
+
+/* ===================================
+   Accessibility - Reduced Motion
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

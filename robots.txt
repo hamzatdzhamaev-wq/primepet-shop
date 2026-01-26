@@ -1,0 +1,34 @@
+# robots.txt für PrimePet
+
+# Alle Suchmaschinen
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /login.html
+Disallow: /js/admin.js
+Disallow: /js/login.js
+
+# Spezielle Anweisungen für Google
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /login.html
+
+# Spezielle Anweisungen für Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /login.html
+
+# Verhindere Scraping/Crawling von bestimmten Bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap Location
+Sitemap: https://www.primepet.de/sitemap.xml
+
+# Host (nur für Yandex relevant)
+Host: www.primepet.de
