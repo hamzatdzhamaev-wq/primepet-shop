@@ -129,7 +129,7 @@ class CJDropshippingAPI {
         }
 
         this.log(`Request Data: ${JSON.stringify(data)}`, 'DEBUG');
-        const response = await this.makeRequest('/product/list/query', 'POST', data);
+        const response = await this.makeRequest('/product/list', 'POST', data);
         this.log(`Full Response: ${JSON.stringify(response)}`, 'DEBUG');
 
         if (response && response.code === 200) {
