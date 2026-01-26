@@ -27,7 +27,13 @@ class CJDropshippingAPI {
      */
     async getAccessToken() {
         try {
-            this.log('Fordere Access Token an...');
+            this.log(`Fordere Access Token an... API Key: ${this.apiKey ? 'vorhanden' : 'FEHLT!'}`);
+            this.log(`ENV Check: ${process.env.CJ_API_KEY ? 'gesetzt' : 'NICHT gesetzt'}`);
+
+            if (!this.apiKey) {
+                this.log('FEHLER: Kein API Key gefunden!', 'ERROR');
+                return false;
+            }
 
             const response = await fetch(`${this.baseUrl}/authentication/getAccessToken`, {
                 method: 'POST',
@@ -40,6 +46,8 @@ class CJDropshippingAPI {
             });
 
             const data = await response.json();
+            this.log(`API Response Status: ${response.status}`, 'DEBUG');
+            this.log(`API Response Data: ${JSON.stringify(data)}`, 'DEBUG');
 
             if (data.code === 200 && data.data) {
                 this.accessToken = data.data.accessToken;
@@ -54,6 +62,7 @@ class CJDropshippingAPI {
             return false;
         } catch (error) {
             this.log(`Exception beim Abrufen des Access Tokens: ${error.message}`, 'ERROR');
+            this.log(`Error Stack: ${error.stack}`, 'ERROR');
             return false;
         }
     }
