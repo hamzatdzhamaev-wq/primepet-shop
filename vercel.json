@@ -29,8 +29,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "CJ_API_KEY": "@cj_api_key"
-  }
+  ]
 }
