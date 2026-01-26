@@ -70,7 +70,7 @@ class CJDropshippingAPI {
      */
     async makeRequest(endpoint, method = 'GET', data = null, requireAuth = true) {
         try {
-            this.log(`API Request: ${method} ${endpoint}`, 'DEBUG');
+            this.log(`API Request: ${method} ${this.baseUrl}${endpoint}`, 'DEBUG');
 
             const headers = {
                 'Content-Type': 'application/json',
@@ -84,6 +84,9 @@ class CJDropshippingAPI {
 
                 if (this.accessToken) {
                     headers['CJ-Access-Token'] = this.accessToken;
+                    this.log(`Auth Token gesetzt: ${this.accessToken.substring(0, 15)}...`, 'DEBUG');
+                } else {
+                    this.log('WARNUNG: Kein Access Token vorhanden!', 'WARNING');
                 }
             }
 
@@ -95,15 +98,17 @@ class CJDropshippingAPI {
 
             if (method === 'POST' && data) {
                 options.body = JSON.stringify(data);
+                this.log(`POST Body: ${JSON.stringify(data)}`, 'DEBUG');
             }
 
             const response = await fetch(`${this.baseUrl}${endpoint}`, options);
             const result = await response.json();
 
-            this.log(`Response Code: ${response.status}`, 'DEBUG');
+            this.log(`HTTP Status: ${response.status}, API Code: ${result?.code}`, 'DEBUG');
             return result;
         } catch (error) {
             this.log(`Request Error: ${error.message}`, 'ERROR');
+            this.log(`Error Stack: ${error.stack}`, 'ERROR');
             return null;
         }
     }
@@ -123,14 +128,16 @@ class CJDropshippingAPI {
             data.categoryId = categoryId;
         }
 
+        this.log(`Request Data: ${JSON.stringify(data)}`, 'DEBUG');
         const response = await this.makeRequest('/product/list/query', 'POST', data);
+        this.log(`Full Response: ${JSON.stringify(response)}`, 'DEBUG');
 
         if (response && response.code === 200) {
             this.log(`Produktliste erfolgreich abgerufen: ${response.data?.list?.length || 0} Produkte`);
             return response.data;
         }
 
-        this.log(`Fehler beim Abrufen der Produktliste: ${JSON.stringify(response)}`, 'ERROR');
+        this.log(`Fehler beim Abrufen der Produktliste: Code=${response?.code}, Message=${response?.message}`, 'ERROR');
         return null;
     }
 
