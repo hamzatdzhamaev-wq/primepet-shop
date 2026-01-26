@@ -25,7 +25,6 @@ class CJDropshippingAPI {
     /**
      * Access Token anfordern
      * CJ API Key Format: "CJ{userId}@api@{token}"
-     * Dieser Key wird direkt als Access Token verwendet
      */
     async getAccessToken() {
         try {
@@ -36,33 +35,81 @@ class CJDropshippingAPI {
                 return false;
             }
 
-            // CJ API Key ist bereits der Access Token
-            // Format: CJ{userId}@api@{token}
-            this.accessToken = this.apiKey;
-            this.tokenExpiry = Date.now() + (365 * 24 * 60 * 60 * 1000); // 1 Jahr gültig
+            const response = await fetch(`${this.baseUrl}/authentication/getAccessToken`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    apiKey: this.apiKey
+                })
+            });
 
-            this.log('Access Token gesetzt (CJ API Key)', 'SUCCESS');
-            return true;
+            const data = await response.json();
+            this.log(`Token Response: ${JSON.stringify(data)}`, 'DEBUG');
+
+            if (data.code === 200 && data.data) {
+                this.accessToken = data.data.accessToken;
+                this.refreshToken = data.data.refreshToken;
+                this.tokenExpiry = Date.now() + (15 * 24 * 60 * 60 * 1000); // 15 Tage
+
+                this.log('Access Token erfolgreich erhalten!', 'SUCCESS');
+                return true;
+            }
+
+            this.log(`Fehler beim Token-Abruf: ${data.message}`, 'ERROR');
+            return false;
         } catch (error) {
-            this.log(`Exception beim Setzen des Access Tokens: ${error.message}`, 'ERROR');
+            this.log(`Exception beim Token-Abruf: ${error.message}`, 'ERROR');
             return false;
         }
     }
 
     /**
      * Access Token auffrischen
-     * Bei CJ API Key ist kein Refresh nötig
      */
     async refreshAccessToken() {
-        return this.getAccessToken();
+        if (!this.refreshToken) {
+            return this.getAccessToken();
+        }
+
+        try {
+            this.log('Frische Access Token auf...');
+
+            const response = await fetch(`${this.baseUrl}/authentication/refreshAccessToken`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    refreshToken: this.refreshToken
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.code === 200 && data.data) {
+                this.accessToken = data.data.accessToken;
+                this.tokenExpiry = Date.now() + (15 * 24 * 60 * 60 * 1000);
+
+                this.log('Access Token erfolgreich aufgefrischt', 'SUCCESS');
+                return true;
+            }
+
+            this.log('Token-Refresh fehlgeschlagen, fordere neuen an...', 'WARNING');
+            return this.getAccessToken();
+        } catch (error) {
+            this.log(`Exception beim Auffrischen: ${error.message}`, 'ERROR');
+            return this.getAccessToken();
+        }
     }
 
     /**
      * Prüfen ob Token abgelaufen ist
-     * CJ API Key läuft nicht ab
      */
     isTokenExpired() {
-        return false;
+        if (!this.tokenExpiry) return true;
+        return Date.now() >= (this.tokenExpiry - 3600000); // 1 Stunde Puffer
     }
 
     /**
