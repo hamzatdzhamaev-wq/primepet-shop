@@ -87,7 +87,7 @@ img {
 /* Lazy Loading Image Fade-in */
 img[loading="lazy"],
 img[data-src] {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.3s ease-in-out;
 }
 
