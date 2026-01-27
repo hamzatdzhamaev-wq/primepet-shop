@@ -25,12 +25,31 @@ function formatProductForShop(cjProduct, customData = {}) {
     // productImage kann String oder Array sein
     let productImage = '';
     if (cjProduct.productImage) {
+        console.log('DEBUG productImage type:', typeof cjProduct.productImage);
+        console.log('DEBUG productImage value:', cjProduct.productImage);
+        console.log('DEBUG productImage isArray:', Array.isArray(cjProduct.productImage));
+
         if (typeof cjProduct.productImage === 'string') {
-            productImage = cjProduct.productImage;
+            // Wenn es ein JSON String ist, parsen
+            try {
+                const parsed = JSON.parse(cjProduct.productImage);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    productImage = parsed[0];
+                    console.log('DEBUG: Parsed JSON array, using first element:', productImage);
+                } else {
+                    productImage = cjProduct.productImage;
+                }
+            } catch (e) {
+                // Kein JSON, verwende als normalen String
+                productImage = cjProduct.productImage;
+            }
         } else if (Array.isArray(cjProduct.productImage) && cjProduct.productImage.length > 0) {
             productImage = cjProduct.productImage[0];
+            console.log('DEBUG: Array detected, using first element:', productImage);
         }
     }
+
+    console.log('DEBUG final productImage:', productImage);
 
     return {
         name: cjProduct.productNameEn || cjProduct.productName || 'Unbenanntes Produkt',
