@@ -251,7 +251,8 @@ function setupLogoutButton() {
 
 // Helper function from products.js to avoid 'not defined' error in admin panel
 function formatPrice(price) {
-    return price.toFixed(2).replace('.', ',') + ' €';
+    const numPrice = parseFloat(price) || 0;
+    return numPrice.toFixed(2).replace('.', ',') + ' €';
 }
 
 // Update Statistics Dashboard
