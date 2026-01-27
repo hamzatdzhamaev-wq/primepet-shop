@@ -83,7 +83,15 @@ function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'cj-product-card';
 
-    const imageUrl = product.productImage && product.productImage[0] ? product.productImage[0] : 'https://via.placeholder.com/300x200?text=Kein+Bild';
+    // productImage kann String oder Array sein
+    let imageUrl = 'https://via.placeholder.com/300x200?text=Kein+Bild';
+    if (product.productImage) {
+        if (typeof product.productImage === 'string') {
+            imageUrl = product.productImage;
+        } else if (Array.isArray(product.productImage) && product.productImage.length > 0) {
+            imageUrl = product.productImage[0];
+        }
+    }
     const stock = product.availableStock || 999;
     const isAvailable = product.saleStatus === 3 || product.saleStatus === '3';
     const price = parseFloat(product.sellPrice || 0);

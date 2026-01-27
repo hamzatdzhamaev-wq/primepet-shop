@@ -22,9 +22,15 @@ function formatProductForShop(cjProduct, customData = {}) {
     const markup = customData.markup || 1.5;
     const sellingPrice = Math.round(costPrice * markup * 100) / 100;
 
-    const productImage = cjProduct.productImage && cjProduct.productImage.length > 0
-        ? cjProduct.productImage[0]
-        : '';
+    // productImage kann String oder Array sein
+    let productImage = '';
+    if (cjProduct.productImage) {
+        if (typeof cjProduct.productImage === 'string') {
+            productImage = cjProduct.productImage;
+        } else if (Array.isArray(cjProduct.productImage) && cjProduct.productImage.length > 0) {
+            productImage = cjProduct.productImage[0];
+        }
+    }
 
     return {
         name: cjProduct.productNameEn || cjProduct.productName || 'Unbenanntes Produkt',
