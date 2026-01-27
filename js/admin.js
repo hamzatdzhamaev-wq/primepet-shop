@@ -102,14 +102,25 @@ function setupFormSubmit() {
 }
 
 // Delete product
-window.deleteProduct = function(id) {
+window.deleteProduct = async function(id) {
     if(confirm('Möchten Sie dieses Produkt wirklich löschen?')) {
-        let currentProducts = JSON.parse(localStorage.getItem('primepet_products')) || [];
-        currentProducts = currentProducts.filter(p => p.id !== id);
-        localStorage.setItem('primepet_products', JSON.stringify(currentProducts));
-        renderAdminList();
-        updateStatistics();
-        showNotification('Produkt erfolgreich gelöscht!', 'success');
+        try {
+            const response = await fetch(`/api/shop-products?action=delete&id=${id}`, {
+                method: 'DELETE'
+            });
+            const data = await response.json();
+
+            if (data.success) {
+                showNotification('Produkt erfolgreich gelöscht!', 'success');
+                renderAdminList();
+                updateStatistics();
+            } else {
+                showNotification('Fehler beim Löschen: ' + data.error, 'error');
+            }
+        } catch (error) {
+            console.error('Fehler beim Löschen:', error);
+            showNotification('Verbindungsfehler beim Löschen', 'error');
+        }
     }
 };
 
@@ -244,19 +255,28 @@ function formatPrice(price) {
 }
 
 // Update Statistics Dashboard
-function updateStatistics() {
-    const currentProducts = JSON.parse(localStorage.getItem('primepet_products')) || [];
+async function updateStatistics() {
+    try {
+        const response = await fetch('/api/shop-products?action=list');
+        const data = await response.json();
 
-    // Total Products
-    document.getElementById('statTotalProducts').textContent = currentProducts.length;
+        if (data.success) {
+            const currentProducts = data.products;
 
-    // Total Value
-    const totalValue = currentProducts.reduce((sum, p) => sum + p.price, 0);
-    document.getElementById('statTotalValue').textContent = formatPrice(totalValue);
+            // Total Products
+            document.getElementById('statTotalProducts').textContent = currentProducts.length;
 
-    // Categories (unique)
-    const categories = new Set(currentProducts.map(p => p.category));
-    document.getElementById('statCategories').textContent = categories.size;
+            // Total Value
+            const totalValue = currentProducts.reduce((sum, p) => sum + parseFloat(p.price || 0), 0);
+            document.getElementById('statTotalValue').textContent = formatPrice(totalValue);
+
+            // Categories (unique)
+            const categories = new Set(currentProducts.map(p => p.category));
+            document.getElementById('statCategories').textContent = categories.size;
+        }
+    } catch (error) {
+        console.error('Fehler beim Laden der Statistiken:', error);
+    }
 }
 
 // Search and Filter Products
@@ -278,56 +298,75 @@ function setupSearchAndFilter() {
 }
 
 // Enhanced renderAdminList with search and filter
-function renderAdminList(searchTerm = '', categoryFilter = 'alle') {
+async function renderAdminList(searchTerm = '', categoryFilter = 'alle') {
     const tbody = document.getElementById('adminProductTable');
     const countSpan = document.getElementById('productCount');
 
-    // Get latest products from storage
-    let currentProducts = JSON.parse(localStorage.getItem('primepet_products')) || [];
+    try {
+        // Produkte aus Datenbank laden
+        const response = await fetch('/api/shop-products?action=list');
+        const data = await response.json();
 
-    // Apply filters
-    if (searchTerm) {
-        currentProducts = currentProducts.filter(p =>
-            p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.description.toLowerCase().includes(searchTerm.toLowerCase())
-        );
+        if (!data.success) {
+            console.error('Fehler beim Laden der Produkte:', data.error);
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Fehler beim Laden der Produkte</td></tr>';
+            return;
+        }
+
+        let currentProducts = data.products;
+
+        // Apply filters
+        if (searchTerm) {
+            currentProducts = currentProducts.filter(p =>
+                p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (p.description && p.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            );
+        }
+
+        if (categoryFilter && categoryFilter !== 'alle') {
+            currentProducts = currentProducts.filter(p => p.category === categoryFilter);
+        }
+
+        countSpan.textContent = `${currentProducts.length} Produkte`;
+        tbody.innerHTML = '';
+
+        if (currentProducts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Keine Produkte gefunden</td></tr>';
+            return;
+        }
+
+        // Sort by newest first
+        const sortedProducts = [...currentProducts].sort((a, b) => b.id - a.id);
+
+        sortedProducts.forEach(product => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><img src="${product.image}" class="table-img" alt="${product.name}"></td>
+                <td>
+                    <strong>${product.name}</strong><br>
+                    <small style="color:var(--text-secondary)">${product.badge || ''}</small>
+                    <div style="margin-top: 0.25rem;">${'⭐'.repeat(product.rating || 5)}</div>
+                </td>
+                <td><span style="text-transform:capitalize">${product.category}</span></td>
+                <td>${formatPrice(product.price)}</td>
+                <td class="actions">
+                    <button class="action-btn btn-edit" onclick="startEditProduct(${product.id})" title="Bearbeiten">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="action-btn" style="background: var(--primary-color);" onclick="duplicateProduct(${product.id})" title="Duplizieren">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="action-btn btn-delete" onclick="deleteProduct(${product.id})" title="Löschen">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error('Fehler beim Laden der Produkte:', error);
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:2rem;">Verbindungsfehler</td></tr>';
     }
-
-    if (categoryFilter && categoryFilter !== 'alle') {
-        currentProducts = currentProducts.filter(p => p.category === categoryFilter);
-    }
-
-    countSpan.textContent = `${currentProducts.length} Produkte`;
-    tbody.innerHTML = '';
-
-    // Sort by newest first
-    const sortedProducts = [...currentProducts].sort((a, b) => b.id - a.id);
-
-    sortedProducts.forEach(product => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><img src="${product.image}" class="table-img" alt="${product.name}"></td>
-            <td>
-                <strong>${product.name}</strong><br>
-                <small style="color:var(--text-secondary)">${product.badge || ''}</small>
-                <div style="margin-top: 0.25rem;">${'⭐'.repeat(product.rating || 5)}</div>
-            </td>
-            <td><span style="text-transform:capitalize">${product.category}</span></td>
-            <td>${formatPrice(product.price)}</td>
-            <td class="actions">
-                <button class="action-btn btn-edit" onclick="startEditProduct(${product.id})" title="Bearbeiten">
-                    <i class="fas fa-pencil-alt"></i>
-                </button>
-                <button class="action-btn" style="background: var(--primary-color);" onclick="duplicateProduct(${product.id})" title="Duplizieren">
-                    <i class="fas fa-copy"></i>
-                </button>
-                <button class="action-btn btn-delete" onclick="deleteProduct(${product.id})" title="Löschen">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-    });
 }
 
 // Duplicate Product
