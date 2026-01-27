@@ -14,19 +14,35 @@ function generateProductImage(text, bgColor, textColor = '#ffffff') {
     return `data:image/svg+xml;base64,${btoa(unescape(encodeURIComponent(svg)))}`;
 }
 
-// Product Database (Leeres Array - Produkte können über Admin-Panel hinzugefügt werden)
-const defaultProducts = [];
-
-// Initialize products from LocalStorage or use defaults
-let products = JSON.parse(localStorage.getItem('primepet_products')) || defaultProducts;
-
-// Save defaults if storage is empty (initial setup)
-if (!localStorage.getItem('primepet_products')) {
-    localStorage.setItem('primepet_products', JSON.stringify(defaultProducts));
-}
+// Product Database - wird von Datenbank geladen
+let products = [];
 
 // Current filter state
 let currentFilter = 'alle';
+
+// Produkte von Datenbank laden
+async function loadProductsFromDatabase() {
+    try {
+        const response = await fetch('/api/shop-products?action=list');
+        const data = await response.json();
+
+        if (data.success) {
+            products = data.products;
+            renderProducts(currentFilter);
+        } else {
+            console.error('Fehler beim Laden der Produkte:', data.error);
+        }
+    } catch (error) {
+        console.error('Fehler beim Laden der Produkte:', error);
+    }
+}
+
+// Produkte beim Page Load laden
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadProductsFromDatabase);
+} else {
+    loadProductsFromDatabase();
+}
 
 // Render products
 function renderProducts(filter = 'alle') {

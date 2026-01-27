@@ -208,25 +208,27 @@ async function importProduct(pid) {
         const data = await response.json();
 
         if (data.success) {
-            // Produkt in localStorage speichern
-            let products = JSON.parse(localStorage.getItem('primepet_products')) || [];
+            // Produkt in Datenbank speichern
+            const saveResponse = await fetch('/api/shop-products?action=add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data.product)
+            });
 
-            // Eindeutige ID generieren basierend auf CJ PID oder Timestamp
-            const product = data.product;
-            product.id = product.cj_pid || Date.now();
+            const saveData = await saveResponse.json();
 
-            // Prüfen ob Produkt bereits existiert (Duplikat vermeiden)
-            const existingIndex = products.findIndex(p => p.cj_pid === product.cj_pid);
-            if (existingIndex !== -1) {
-                showAlert('warning', 'Produkt wurde bereits importiert!');
-                return;
+            if (saveData.success) {
+                showAlert('success', 'Produkt erfolgreich in Shop importiert!');
+                updateStats();
+            } else {
+                if (saveData.error === 'Produkt bereits vorhanden') {
+                    showAlert('warning', 'Produkt wurde bereits importiert!');
+                } else {
+                    showAlert('error', 'Fehler beim Speichern: ' + saveData.error);
+                }
             }
-
-            products.push(product);
-            localStorage.setItem('primepet_products', JSON.stringify(products));
-
-            showAlert('success', 'Produkt erfolgreich importiert!');
-            updateStats();
         } else {
             showAlert('error', 'Fehler beim Importieren: ' + (data.error || 'Unbekannter Fehler'));
         }
@@ -341,11 +343,18 @@ async function syncStock() {
 /**
  * Statistiken aktualisieren
  */
-function updateStats() {
-    const products = JSON.parse(localStorage.getItem('primepet_products')) || [];
-    const importedProducts = products.filter(p => p.cj_pid).length;
+async function updateStats() {
+    try {
+        const response = await fetch('/api/shop-products?action=list');
+        const data = await response.json();
 
-    document.getElementById('statImportedProducts').textContent = importedProducts;
+        if (data.success) {
+            const importedProducts = data.products.filter(p => p.cj_pid).length;
+            document.getElementById('statImportedProducts').textContent = importedProducts;
+        }
+    } catch (error) {
+        console.error('Fehler beim Laden der Statistiken:', error);
+    }
 
     // Letzte Sync-Zeit aus localStorage (falls vorhanden)
     const lastSync = localStorage.getItem('last_cj_sync');
