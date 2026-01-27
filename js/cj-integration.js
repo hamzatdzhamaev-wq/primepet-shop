@@ -240,6 +240,7 @@ function searchProducts() {
 
     let filtered = allProducts;
 
+    // Suchbegriff anwenden
     if (searchTerm) {
         filtered = filtered.filter(p =>
             (p.productNameEn && p.productNameEn.toLowerCase().includes(searchTerm)) ||
@@ -248,9 +249,9 @@ function searchProducts() {
     }
 
     // Kategoriefilter nach CJ Kategorien
-    if (categoryFilter) {
+    if (categoryFilter && categoryFilter !== '') {
         const categoryKeywords = {
-            'hunde': ['dog', 'hund', 'pet', 'puppy'],
+            'hunde': ['dog', 'hund', 'pet', 'puppy', 'canine'],
             'katzen': ['cat', 'katze', 'kitten', 'feline'],
             'vögel': ['bird', 'vogel', 'parrot', 'parakeet'],
             'kleintiere': ['small animal', 'rabbit', 'hamster', 'guinea', 'ferret']
@@ -267,6 +268,23 @@ function searchProducts() {
     }
 
     renderProducts(filtered);
+
+    // Hilfreiche Nachricht wenn keine Produkte gefunden
+    if (filtered.length === 0) {
+        const productGrid = document.getElementById('productGrid');
+        productGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                <i class="fas fa-search" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                <h3>Keine Produkte gefunden</h3>
+                <p style="opacity: 0.7; margin-bottom: 1rem;">
+                    ${categoryFilter ? 'Tipp: Suche nach spezifischen Tierprodukten im Suchfeld (z.B. "dog toy", "cat food", "pet bed")' : 'Versuche andere Suchbegriffe'}
+                </p>
+                <button class="btn-primary" onclick="document.getElementById('searchInput').value=''; document.getElementById('categoryFilter').value=''; searchProducts();">
+                    <i class="fas fa-redo"></i> Alle Produkte anzeigen
+                </button>
+            </div>
+        `;
+    }
 }
 
 /**
