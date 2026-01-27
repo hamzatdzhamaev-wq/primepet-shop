@@ -210,7 +210,19 @@ async function importProduct(pid) {
         if (data.success) {
             // Produkt in localStorage speichern
             let products = JSON.parse(localStorage.getItem('primepet_products')) || [];
-            products.push(data.product);
+
+            // Eindeutige ID generieren basierend auf CJ PID oder Timestamp
+            const product = data.product;
+            product.id = product.cj_pid || Date.now();
+
+            // Prüfen ob Produkt bereits existiert (Duplikat vermeiden)
+            const existingIndex = products.findIndex(p => p.cj_pid === product.cj_pid);
+            if (existingIndex !== -1) {
+                showAlert('warning', 'Produkt wurde bereits importiert!');
+                return;
+            }
+
+            products.push(product);
             localStorage.setItem('primepet_products', JSON.stringify(products));
 
             showAlert('success', 'Produkt erfolgreich importiert!');
