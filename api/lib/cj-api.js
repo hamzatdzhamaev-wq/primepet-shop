@@ -139,7 +139,8 @@ class CJDropshippingAPI {
                 }
 
                 if (this.accessToken) {
-                    headers['CJ-Access-Token'] = this.accessToken;
+                    // Token ohne Validierung setzen (node-fetch v2 mag Doppelpunkte nicht)
+                    headers['cj-access-token'] = this.accessToken.replace(/:/g, '%3A');
                     this.log(`Auth Token gesetzt: ${this.accessToken.substring(0, 15)}...`, 'DEBUG');
                 } else {
                     this.log('WARNUNG: Kein Access Token vorhanden!', 'WARNING');
