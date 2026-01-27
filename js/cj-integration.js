@@ -40,13 +40,15 @@ async function loadProducts(page = 1) {
 
         if (data.success) {
             allProducts = data.data.list || [];
-            totalPages = data.data.totalPages || 1;
+            // totalPages aus total und pageSize berechnen
+            const totalProducts = data.data.total || 0;
+            totalPages = Math.ceil(totalProducts / 20);
             currentPage = page;
 
             renderProducts(allProducts);
             renderPagination();
 
-            document.getElementById('statTotalProducts').textContent = data.data.total || 0;
+            document.getElementById('statTotalProducts').textContent = totalProducts;
         } else {
             showAlert('error', 'Fehler beim Laden der Produkte: ' + (data.error || 'Unbekannter Fehler'));
         }
@@ -207,24 +209,23 @@ function renderPagination() {
     // Previous button
     const prevBtn = document.createElement('button');
     prevBtn.className = 'page-btn';
-    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i> Zurück';
     prevBtn.disabled = currentPage === 1;
     prevBtn.onclick = () => loadProducts(currentPage - 1);
     paginationContainer.appendChild(prevBtn);
 
-    // Page numbers
-    for (let i = 1; i <= Math.min(totalPages, 5); i++) {
-        const pageBtn = document.createElement('button');
-        pageBtn.className = 'page-btn' + (i === currentPage ? ' active' : '');
-        pageBtn.textContent = i;
-        pageBtn.onclick = () => loadProducts(i);
-        paginationContainer.appendChild(pageBtn);
-    }
+    // Seitenanzeige
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'page-info';
+    pageInfo.textContent = `Seite ${currentPage} von ${totalPages.toLocaleString('de-DE')}`;
+    pageInfo.style.margin = '0 15px';
+    pageInfo.style.fontWeight = 'bold';
+    paginationContainer.appendChild(pageInfo);
 
     // Next button
     const nextBtn = document.createElement('button');
     nextBtn.className = 'page-btn';
-    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nextBtn.innerHTML = 'Weiter <i class="fas fa-chevron-right"></i>';
     nextBtn.disabled = currentPage === totalPages;
     nextBtn.onclick = () => loadProducts(currentPage + 1);
     paginationContainer.appendChild(nextBtn);
@@ -246,8 +247,24 @@ function searchProducts() {
         );
     }
 
-    // Note: Category filtering würde eine Mapping-Logik erfordern
-    // zwischen CJ-Kategorien und PrimePet-Kategorien
+    // Kategoriefilter nach CJ Kategorien
+    if (categoryFilter) {
+        const categoryKeywords = {
+            'hunde': ['dog', 'hund', 'pet', 'puppy'],
+            'katzen': ['cat', 'katze', 'kitten', 'feline'],
+            'vögel': ['bird', 'vogel', 'parrot', 'parakeet'],
+            'kleintiere': ['small animal', 'rabbit', 'hamster', 'guinea', 'ferret']
+        };
+
+        const keywords = categoryKeywords[categoryFilter] || [];
+        filtered = filtered.filter(p => {
+            const categoryName = (p.categoryName || '').toLowerCase();
+            const productName = (p.productNameEn || p.productName || '').toLowerCase();
+            return keywords.some(keyword =>
+                categoryName.includes(keyword) || productName.includes(keyword)
+            );
+        });
+    }
 
     renderProducts(filtered);
 }
