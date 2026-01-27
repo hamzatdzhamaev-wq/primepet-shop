@@ -162,7 +162,7 @@ function openProductDetail(productId) {
         badgeContainer.innerHTML = '';
     }
 
-    document.getElementById('productDetailDescription').textContent = product.description;
+    document.getElementById('productDetailDescription').innerHTML = product.description;
 
     // Setup Add to Cart button
     const addToCartBtn = document.getElementById('productDetailAddToCart');
