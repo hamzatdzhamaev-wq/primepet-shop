@@ -29,6 +29,10 @@
       "dest": "/api/fix-images.js"
     },
     {
+      "src": "/api/debug-products",
+      "dest": "/api/debug-products.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
