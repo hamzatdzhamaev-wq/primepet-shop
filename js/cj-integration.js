@@ -84,19 +84,20 @@ function createProductCard(product) {
     card.className = 'cj-product-card';
 
     const imageUrl = product.productImage && product.productImage[0] ? product.productImage[0] : 'https://via.placeholder.com/300x200?text=Kein+Bild';
-    const stock = product.availableStock || 0;
+    const stock = product.availableStock || 999;
+    const isAvailable = product.saleStatus === 3 || product.saleStatus === '3';
     const price = parseFloat(product.sellPrice || 0);
     const sellingPrice = (price * 1.5).toFixed(2); // 50% Aufschlag
 
     let stockClass = 'stock-available';
-    let stockText = `Auf Lager (${stock})`;
+    let stockText = 'Auf Lager';
 
-    if (stock === 0) {
+    if (!isAvailable) {
         stockClass = 'stock-out';
         stockText = 'Nicht verfügbar';
-    } else if (stock < 10) {
+    } else if (product.availableStock && product.availableStock < 10) {
         stockClass = 'stock-low';
-        stockText = `Niedriger Bestand (${stock})`;
+        stockText = `Niedriger Bestand (${product.availableStock})`;
     }
 
     card.innerHTML = `
@@ -135,7 +136,7 @@ function createProductCard(product) {
                     </select>
                 </div>
 
-                <button class="btn-import" onclick="importProduct('${product.pid}')" ${stock === 0 ? 'disabled' : ''}>
+                <button class="btn-import" onclick="importProduct('${product.pid}')" ${!isAvailable ? 'disabled' : ''}>
                     <i class="fas fa-download"></i> Produkt importieren
                 </button>
             </div>
