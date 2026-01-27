@@ -25,6 +25,10 @@
       "dest": "/api/sync.js"
     },
     {
+      "src": "/api/fix-images",
+      "dest": "/api/fix-images.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/$1"
     }
