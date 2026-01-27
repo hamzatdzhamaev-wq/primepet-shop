@@ -254,7 +254,8 @@ function getCategoryName(category) {
 
 // Format price
 function formatPrice(price) {
-    return price.toFixed(2).replace('.', ',') + ' €';
+    const numPrice = parseFloat(price) || 0;
+    return numPrice.toFixed(2).replace('.', ',') + ' €';
 }
 
 // Get product by ID
