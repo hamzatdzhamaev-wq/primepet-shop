@@ -1,9 +1,8 @@
 /**
  * CJDropshipping API Client - Node.js Version
  * Für Vercel Serverless Functions
+ * Verwendet native fetch API (Node.js 18+)
  */
-
-const fetch = require('node-fetch');
 
 class CJDropshippingAPI {
     constructor(apiKey) {
@@ -139,8 +138,7 @@ class CJDropshippingAPI {
                 }
 
                 if (this.accessToken) {
-                    // Token ohne Validierung setzen (node-fetch v2 mag Doppelpunkte nicht)
-                    headers['cj-access-token'] = this.accessToken.replace(/:/g, '%3A');
+                    headers['CJ-Access-Token'] = this.accessToken;
                     this.log(`Auth Token gesetzt: ${this.accessToken.substring(0, 15)}...`, 'DEBUG');
                 } else {
                     this.log('WARNUNG: Kein Access Token vorhanden!', 'WARNING');
