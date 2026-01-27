@@ -28,7 +28,15 @@ class CJDropshippingAPI {
      */
     async getAccessToken() {
         try {
-            this.log(`Fordere Access Token an... API Key: ${this.apiKey ? 'vorhanden' : 'FEHLT!'}`);
+            // Zuerst prüfen ob gespeicherter Token existiert
+            if (process.env.CJ_ACCESS_TOKEN) {
+                this.accessToken = process.env.CJ_ACCESS_TOKEN;
+                this.tokenExpiry = Date.now() + (15 * 24 * 60 * 60 * 1000); // 15 Tage
+                this.log('Verwende gespeicherten Access Token', 'SUCCESS');
+                return true;
+            }
+
+            this.log(`Fordere neuen Access Token an... API Key: ${this.apiKey ? 'vorhanden' : 'FEHLT!'}`);
 
             if (!this.apiKey) {
                 this.log('FEHLER: Kein API Key gefunden!', 'ERROR');
@@ -54,6 +62,7 @@ class CJDropshippingAPI {
                 this.tokenExpiry = Date.now() + (15 * 24 * 60 * 60 * 1000); // 15 Tage
 
                 this.log('Access Token erfolgreich erhalten!', 'SUCCESS');
+                this.log(`WICHTIG: Speichere als CJ_ACCESS_TOKEN: ${this.accessToken}`, 'INFO');
                 return true;
             }
 
