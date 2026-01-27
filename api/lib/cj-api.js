@@ -166,17 +166,14 @@ class CJDropshippingAPI {
     async getProductList(categoryId = null, page = 1, pageSize = 20) {
         this.log(`Rufe Produktliste ab (Seite: ${page})...`);
 
-        const data = {
-            pageNum: page,
-            pageSize: pageSize
-        };
+        let endpoint = `/product/list?pageNum=${page}&pageSize=${pageSize}`;
 
         if (categoryId) {
-            data.categoryId = categoryId;
+            endpoint += `&categoryId=${categoryId}`;
         }
 
-        this.log(`Request Data: ${JSON.stringify(data)}`, 'DEBUG');
-        const response = await this.makeRequest('/product/list', 'POST', data);
+        this.log(`Request Endpoint: ${endpoint}`, 'DEBUG');
+        const response = await this.makeRequest(endpoint, 'GET', null);
         this.log(`Full Response: ${JSON.stringify(response)}`, 'DEBUG');
 
         if (response && response.code === 200) {
