@@ -5,6 +5,14 @@
       "dest": "/api/products.js"
     },
     {
+      "src": "/api/shop-products",
+      "dest": "/api/shop-products.js"
+    },
+    {
+      "src": "/api/db-init",
+      "dest": "/api/db-init.js"
+    },
+    {
       "src": "/api/orders",
       "dest": "/api/orders.js"
     },
