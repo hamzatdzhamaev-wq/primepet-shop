@@ -135,12 +135,41 @@ function openProductDetail(productId) {
     const modal = document.getElementById('productDetailModal');
     if (!modal) return;
 
-    // Populate media
+    // Extract images from description
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = product.description || '';
+    const descriptionImages = Array.from(tempDiv.querySelectorAll('img')).map(img => img.src);
+
+    // Remove images from description
+    tempDiv.querySelectorAll('img').forEach(img => img.remove());
+    const cleanDescription = tempDiv.innerHTML;
+
+    // Build image gallery
+    const allImages = [product.image, ...descriptionImages].filter(Boolean);
+
+    // Populate media with image gallery
     const mediaContainer = document.getElementById('productDetailMedia');
     if (product.video) {
         mediaContainer.innerHTML = `<video src="${product.video}" poster="${product.image}" controls autoplay muted loop style="max-width: 100%; max-height: 600px; object-fit: contain; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);"></video>`;
     } else {
-        mediaContainer.innerHTML = `<img src="${product.image}" alt="${product.name}" style="max-width: 100%; max-height: 600px; object-fit: contain; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">`;
+        mediaContainer.innerHTML = `
+            <div class="product-gallery">
+                <div class="gallery-main">
+                    <img id="galleryMainImage" src="${allImages[0]}" alt="${product.name}" style="max-width: 100%; max-height: 500px; object-fit: contain; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+                </div>
+                ${allImages.length > 1 ? `
+                <div class="gallery-thumbnails">
+                    ${allImages.map((img, idx) => `
+                        <img src="${img}"
+                             alt="Bild ${idx + 1}"
+                             class="gallery-thumb ${idx === 0 ? 'active' : ''}"
+                             onclick="switchGalleryImage('${img}', ${idx})"
+                             style="cursor: pointer;">
+                    `).join('')}
+                </div>
+                ` : ''}
+            </div>
+        `;
     }
 
     // Populate info
@@ -162,7 +191,7 @@ function openProductDetail(productId) {
         badgeContainer.innerHTML = '';
     }
 
-    document.getElementById('productDetailDescription').innerHTML = product.description;
+    document.getElementById('productDetailDescription').innerHTML = cleanDescription;
 
     // Setup Add to Cart button
     const addToCartBtn = document.getElementById('productDetailAddToCart');
@@ -216,6 +245,23 @@ window.closeProductDetail = function() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
     }
+};
+
+// Switch Gallery Image
+window.switchGalleryImage = function(imageSrc, index) {
+    const mainImage = document.getElementById('galleryMainImage');
+    if (mainImage) {
+        mainImage.src = imageSrc;
+    }
+
+    // Update active thumbnail
+    document.querySelectorAll('.gallery-thumb').forEach((thumb, idx) => {
+        if (idx === index) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
+        }
+    });
 };
 
 // Close modal on Escape key
