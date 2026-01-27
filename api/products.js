@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
             });
         }
 
-        const { action, page, pageSize, categoryId, pid } = req.query;
+        const { action, page, pageSize, categoryId, pid, search } = req.query;
 
         switch (action) {
             case 'list': {
@@ -77,7 +77,8 @@ module.exports = async (req, res) => {
                 const products = await cjApi.getProductList(
                     categoryId || null,
                     parseInt(page) || 1,
-                    parseInt(pageSize) || 20
+                    parseInt(pageSize) || 20,
+                    search || null
                 );
 
                 if (products) {

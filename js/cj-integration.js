@@ -6,6 +6,7 @@
 let currentPage = 1;
 let totalPages = 1;
 let allProducts = [];
+let currentSearch = '';
 
 // Beim Laden der Seite
 document.addEventListener('DOMContentLoaded', function() {
@@ -27,15 +28,25 @@ function checkAuthentication() {
 /**
  * Produkte von CJDropshipping laden
  */
-async function loadProducts(page = 1) {
+async function loadProducts(page = 1, searchTerm = null) {
     const loadingIndicator = document.getElementById('loadingIndicator');
     const productGrid = document.getElementById('productGrid');
 
     loadingIndicator.style.display = 'block';
     productGrid.innerHTML = '';
 
+    // Aktuellen Suchbegriff speichern
+    if (searchTerm !== null) {
+        currentSearch = searchTerm;
+    }
+
     try {
-        const response = await fetch(`/api/products?action=list&page=${page}&pageSize=20`);
+        let url = `/api/products?action=list&page=${page}&pageSize=20`;
+        if (currentSearch) {
+            url += `&search=${encodeURIComponent(currentSearch)}`;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.success) {
@@ -49,6 +60,22 @@ async function loadProducts(page = 1) {
             renderPagination();
 
             document.getElementById('statTotalProducts').textContent = totalProducts;
+
+            // Zeige Nachricht wenn keine Produkte gefunden
+            if (allProducts.length === 0) {
+                productGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                        <i class="fas fa-search" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                        <h3>Keine Produkte gefunden</h3>
+                        <p style="opacity: 0.7; margin-bottom: 1rem;">
+                            ${currentSearch ? `Keine Ergebnisse für "${currentSearch}"` : 'Versuche andere Suchbegriffe'}
+                        </p>
+                        <button class="btn-primary" onclick="document.getElementById('searchInput').value=''; currentSearch=''; loadProducts(1, '');">
+                            <i class="fas fa-redo"></i> Alle Produkte anzeigen
+                        </button>
+                    </div>
+                `;
+            }
         } else {
             showAlert('error', 'Fehler beim Laden der Produkte: ' + (data.error || 'Unbekannter Fehler'));
         }
@@ -235,56 +262,29 @@ function renderPagination() {
  * Produkte suchen
  */
 function searchProducts() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const searchInput = document.getElementById('searchInput').value.trim();
     const categoryFilter = document.getElementById('categoryFilter').value;
 
-    let filtered = allProducts;
+    // Suchbegriff erstellen
+    let searchTerm = searchInput;
 
-    // Suchbegriff anwenden
-    if (searchTerm) {
-        filtered = filtered.filter(p =>
-            (p.productNameEn && p.productNameEn.toLowerCase().includes(searchTerm)) ||
-            (p.productName && p.productName.toLowerCase().includes(searchTerm))
-        );
-    }
-
-    // Kategoriefilter nach CJ Kategorien
+    // Wenn Kategorie ausgewählt ist, füge relevante Keywords hinzu
     if (categoryFilter && categoryFilter !== '') {
         const categoryKeywords = {
-            'hunde': ['dog', 'hund', 'pet', 'puppy', 'canine'],
-            'katzen': ['cat', 'katze', 'kitten', 'feline'],
-            'vögel': ['bird', 'vogel', 'parrot', 'parakeet'],
-            'kleintiere': ['small animal', 'rabbit', 'hamster', 'guinea', 'ferret']
+            'hunde': 'dog pet puppy',
+            'katzen': 'cat kitten',
+            'vögel': 'bird parrot',
+            'kleintiere': 'rabbit hamster guinea'
         };
 
-        const keywords = categoryKeywords[categoryFilter] || [];
-        filtered = filtered.filter(p => {
-            const categoryName = (p.categoryName || '').toLowerCase();
-            const productName = (p.productNameEn || p.productName || '').toLowerCase();
-            return keywords.some(keyword =>
-                categoryName.includes(keyword) || productName.includes(keyword)
-            );
-        });
+        const keyword = categoryKeywords[categoryFilter];
+        if (keyword) {
+            searchTerm = searchTerm ? `${searchTerm} ${keyword}` : keyword;
+        }
     }
 
-    renderProducts(filtered);
-
-    // Hilfreiche Nachricht wenn keine Produkte gefunden
-    if (filtered.length === 0) {
-        const productGrid = document.getElementById('productGrid');
-        productGrid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
-                <i class="fas fa-search" style="font-size: 3rem; opacity: 0.3; margin-bottom: 1rem;"></i>
-                <h3>Keine Produkte gefunden</h3>
-                <p style="opacity: 0.7; margin-bottom: 1rem;">
-                    ${categoryFilter ? 'Tipp: Suche nach spezifischen Tierprodukten im Suchfeld (z.B. "dog toy", "cat food", "pet bed")' : 'Versuche andere Suchbegriffe'}
-                </p>
-                <button class="btn-primary" onclick="document.getElementById('searchInput').value=''; document.getElementById('categoryFilter').value=''; searchProducts();">
-                    <i class="fas fa-redo"></i> Alle Produkte anzeigen
-                </button>
-            </div>
-        `;
-    }
+    // Neue Suche starten (lädt Seite 1 mit Suchbegriff)
+    loadProducts(1, searchTerm);
 }
 
 /**

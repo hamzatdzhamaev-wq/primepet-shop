@@ -171,13 +171,17 @@ class CJDropshippingAPI {
     /**
      * Produktliste abrufen
      */
-    async getProductList(categoryId = null, page = 1, pageSize = 20) {
-        this.log(`Rufe Produktliste ab (Seite: ${page})...`);
+    async getProductList(categoryId = null, page = 1, pageSize = 20, searchTerm = null) {
+        this.log(`Rufe Produktliste ab (Seite: ${page}, Suche: ${searchTerm || 'keine'})...`);
 
         let endpoint = `/product/list?pageNum=${page}&pageSize=${pageSize}`;
 
         if (categoryId) {
             endpoint += `&categoryId=${categoryId}`;
+        }
+
+        if (searchTerm) {
+            endpoint += `&productName=${encodeURIComponent(searchTerm)}`;
         }
 
         this.log(`Request Endpoint: ${endpoint}`, 'DEBUG');
