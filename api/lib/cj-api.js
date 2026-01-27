@@ -203,14 +203,17 @@ class CJDropshippingAPI {
     async getProductDetail(pid) {
         this.log(`Rufe Produktdetails ab für PID: ${pid}`);
 
-        const response = await this.makeRequest('/product/query', 'POST', { pid });
+        // CJ API verwendet /product/query mit pid Parameter
+        const response = await this.makeRequest(`/product/query?pid=${pid}`, 'GET', null);
 
-        if (response && response.code === 200) {
+        this.log(`Product Detail Response: ${JSON.stringify(response)}`, 'DEBUG');
+
+        if (response && response.code === 200 && response.data) {
             this.log('Produktdetails erfolgreich abgerufen');
             return response.data;
         }
 
-        this.log(`Fehler beim Abrufen der Produktdetails: ${JSON.stringify(response)}`, 'ERROR');
+        this.log(`Fehler beim Abrufen der Produktdetails: Code=${response?.code}, Message=${response?.message}`, 'ERROR');
         return null;
     }
 
