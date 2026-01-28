@@ -70,6 +70,17 @@ function formatProductForShop(cjProduct, customData = {}) {
 
     console.log('DEBUG final productImage:', productImage);
 
+    // Get VID - if product has variants, take first variant, otherwise use PID
+    let vid = cjProduct.vid;
+    if (!vid && cjProduct.variants && cjProduct.variants.length > 0) {
+        vid = cjProduct.variants[0].vid;
+        console.log('DEBUG: Using first variant VID:', vid);
+    } else if (!vid) {
+        // No variants, use PID as VID (some products don't have separate variants)
+        vid = cjProduct.pid;
+        console.log('DEBUG: No variants, using PID as VID:', vid);
+    }
+
     return {
         name: cjProduct.productNameEn || cjProduct.productName || 'Unbenanntes Produkt',
         price: sellingPrice,
@@ -79,7 +90,7 @@ function formatProductForShop(cjProduct, customData = {}) {
         rating: 5,
         badge: customData.badge || 'NEU',
         cj_pid: cjProduct.pid,
-        cj_vid: cjProduct.vid || null,
+        cj_vid: vid,
         cj_cost_price: costPrice,
         cj_stock: cjProduct.availableStock || 0
     };

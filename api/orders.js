@@ -7,21 +7,27 @@ const CJDropshippingAPI = require('./lib/cj-api');
 
 // Helper: Bestellung für CJ formatieren
 function formatOrderForCJ(shopOrder) {
+    console.log('Formatting order for CJ:', shopOrder);
+
     const products = shopOrder.items.map(item => ({
-        vid: item.cj_vid || item.vid,
+        vid: item.vid,
         quantity: item.quantity
     }));
 
+    const customer = shopOrder.customer;
     const shippingAddress = {
-        countryCode: shopOrder.customer?.country || 'DE',
-        firstName: shopOrder.customer?.firstName || '',
-        lastName: shopOrder.customer?.lastName || '',
-        addressLine1: shopOrder.customer?.address || '',
-        city: shopOrder.customer?.city || '',
-        zip: shopOrder.customer?.zip || '',
-        phone: shopOrder.customer?.phone || '',
-        email: shopOrder.customer?.email || ''
+        countryCode: customer?.country || 'DE',
+        firstName: customer?.firstName || '',
+        lastName: customer?.lastName || '',
+        addressLine1: customer?.address || '',
+        city: customer?.city || '',
+        zip: customer?.zip || '',
+        phone: customer?.phone || '',
+        email: customer?.email || ''
     };
+
+    console.log('CJ Shipping Address:', shippingAddress);
+    console.log('CJ Products:', products);
 
     return {
         orderNumber: `PRIME-${Date.now()}-${Math.floor(Math.random() * 10000)}`,

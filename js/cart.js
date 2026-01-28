@@ -342,18 +342,88 @@ function setupSuccessModal() {
 }
 
 // Process checkout
-function processCheckout() {
+// Send order to CJDropshipping
+async function sendOrderToCJ(orderData, customerData) {
+    try {
+        console.log('Sending order to CJDropshipping...', orderData);
+
+        // Get products from database to get cj_vid
+        const productIds = orderData.items.map(item => item.id);
+        const productsResponse = await fetch('/api/shop-products?action=list');
+        const productsData = await productsResponse.json();
+
+        if (!productsData.success) {
+            console.error('Failed to load products for CJ order');
+            return;
+        }
+
+        const products = productsData.products;
+
+        // Build CJ order items with VID
+        const cjItems = orderData.items.map(item => {
+            const product = products.find(p => p.id === item.id);
+
+            if (!product || !product.cj_vid) {
+                console.warn(`Product ${item.id} has no cj_vid, skipping from CJ order`);
+                return null;
+            }
+
+            return {
+                vid: product.cj_vid,
+                quantity: item.quantity,
+                cj_pid: product.cj_pid
+            };
+        }).filter(Boolean); // Remove null entries
+
+        if (cjItems.length === 0) {
+            console.warn('No CJ products in order, skipping CJ order creation');
+            return;
+        }
+
+        // Create CJ order payload
+        const cjOrderData = {
+            items: cjItems,
+            customer: customerData
+        };
+
+        console.log('CJ Order Data:', cjOrderData);
+
+        // Send to API
+        const response = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(cjOrderData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            console.log('✅ CJ Order created:', result.cj_order_number);
+        } else {
+            console.error('❌ Failed to create CJ order:', result.error);
+        }
+    } catch (error) {
+        console.error('Error sending order to CJ:', error);
+    }
+}
+
+async function processCheckout() {
     const checkoutModal = document.getElementById('checkoutModal');
     const checkoutForm = document.getElementById('checkoutForm');
 
     // Get customer data from form
     const customerData = {
-        name: document.getElementById('customerName')?.value || '',
-        email: document.getElementById('customerEmail')?.value || '',
-        phone: document.getElementById('customerPhone')?.value || '',
-        address: document.getElementById('customerAddress')?.value || '',
-        zip: document.getElementById('customerZip')?.value || '',
-        city: document.getElementById('customerCity')?.value || ''
+        firstName: document.getElementById('firstName')?.value || '',
+        lastName: document.getElementById('lastName')?.value || '',
+        name: (document.getElementById('firstName')?.value || '') + ' ' + (document.getElementById('lastName')?.value || ''),
+        email: document.getElementById('email')?.value || '',
+        phone: document.getElementById('phone')?.value || '',
+        address: document.getElementById('address')?.value || '',
+        zip: document.getElementById('zipCode')?.value || '',
+        city: document.getElementById('city')?.value || '',
+        country: 'DE'
     };
 
     // Create order data (from email.js)
@@ -361,6 +431,9 @@ function processCheckout() {
 
     // Save order to history (from email.js)
     saveOrderToHistory(orderData);
+
+    // Send order to CJDropshipping
+    await sendOrderToCJ(orderData, customerData);
 
     // Close checkout modal
     if (checkoutModal) {
