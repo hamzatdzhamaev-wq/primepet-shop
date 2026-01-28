@@ -351,7 +351,7 @@ async function renderAdminList(searchTerm = '', categoryFilter = 'alle') {
                 <td><span style="text-transform:capitalize">${product.category}</span></td>
                 <td>${formatPrice(product.price)}</td>
                 <td class="actions">
-                    <button class="action-btn btn-edit" onclick="startEditProduct(${product.id})" title="Bearbeiten">
+                    <button class="action-btn btn-edit" onclick="editProduct(${product.id})" title="Bearbeiten">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                     <button class="action-btn" style="background: var(--primary-color);" onclick="duplicateProduct(${product.id})" title="Duplizieren">
@@ -443,6 +443,83 @@ function setupImportExport() {
         });
     }
 }
+
+// Edit Product
+window.editProduct = async function(id) {
+    try {
+        const response = await fetch(`/api/shop-products?action=get&id=${id}`);
+        const data = await response.json();
+
+        if (data.success && data.product) {
+            const product = data.product;
+
+            // Fill form fields
+            document.getElementById('editProductId').value = product.id;
+            document.getElementById('editProductName').value = product.name;
+            document.getElementById('editProductCategory').value = product.category;
+            document.getElementById('editProductPrice').value = parseFloat(product.price);
+            document.getElementById('editProductBadge').value = product.badge || '';
+            document.getElementById('editProductImage').value = product.image || '';
+            document.getElementById('editProductDescription').value = product.description || '';
+
+            // Open modal
+            const modal = document.getElementById('editProductModal');
+            modal.style.display = 'flex';
+        } else {
+            showNotification('Produkt nicht gefunden', 'error');
+        }
+    } catch (error) {
+        console.error('Fehler beim Laden des Produkts:', error);
+        showNotification('Verbindungsfehler beim Laden', 'error');
+    }
+};
+
+// Close Edit Modal
+window.closeEditModal = function() {
+    const modal = document.getElementById('editProductModal');
+    modal.style.display = 'none';
+};
+
+// Save Product
+window.saveProduct = async function(event) {
+    event.preventDefault();
+
+    const id = document.getElementById('editProductId').value;
+    const product = {
+        name: document.getElementById('editProductName').value,
+        category: document.getElementById('editProductCategory').value,
+        price: parseFloat(document.getElementById('editProductPrice').value),
+        badge: document.getElementById('editProductBadge').value,
+        image: document.getElementById('editProductImage').value,
+        description: document.getElementById('editProductDescription').value,
+        rating: 5,
+        cj_stock: 0
+    };
+
+    try {
+        const response = await fetch(`/api/shop-products?action=update&id=${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(product)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            showNotification('Produkt erfolgreich aktualisiert!', 'success');
+            closeEditModal();
+            renderAdminList();
+            updateStatistics();
+        } else {
+            showNotification('Fehler beim Speichern: ' + data.error, 'error');
+        }
+    } catch (error) {
+        console.error('Fehler beim Speichern:', error);
+        showNotification('Verbindungsfehler beim Speichern', 'error');
+    }
+};
 
 // Show Notification (Toast)
 function showNotification(message, type = 'success') {
