@@ -72,6 +72,23 @@ function renderProducts(filter = 'alle') {
     }, 100);
 }
 
+// Truncate text and strip HTML
+function truncateText(text, maxLength = 100) {
+    if (!text) return '';
+
+    // Remove HTML tags
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = text;
+    const plainText = tempDiv.textContent || tempDiv.innerText || '';
+
+    // Truncate if needed
+    if (plainText.length <= maxLength) {
+        return plainText;
+    }
+
+    return plainText.substring(0, maxLength).trim() + '...';
+}
+
 // Create product card element
 function createProductCard(product, index) {
     const card = document.createElement('div');
@@ -90,6 +107,9 @@ function createProductCard(product, index) {
         mediaHtml = `<img src="${product.image}" alt="${product.name}" loading="lazy">`;
     }
 
+    // Truncate description for card display
+    const shortDescription = truncateText(product.description, 100);
+
     card.innerHTML = `
         <div class="product-image">
             ${mediaHtml}
@@ -104,7 +124,7 @@ function createProductCard(product, index) {
             <div class="product-rating">
                 ${stars}
             </div>
-            <p class="product-description">${product.description}</p>
+            <p class="product-description">${shortDescription}</p>
             <div class="product-footer">
                 <span class="product-price">${formatPrice(product.price)}</span>
                 <button class="add-to-cart-btn" onclick="addToCartFromButton(${product.id})">
