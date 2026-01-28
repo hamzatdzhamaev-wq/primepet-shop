@@ -261,6 +261,97 @@ function setupCookieBanner() {
     if (declineBtn) declineBtn.addEventListener('click', () => closeBanner('declined'));
 }
 
+// Scroll-triggered animations with Intersection Observer
+function setupScrollAnimations() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Optionally unobserve after animation
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe elements with animation classes
+    const animatedElements = document.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .scale-in, .animate-on-scroll');
+    animatedElements.forEach(el => observer.observe(el));
+
+    // Product cards get visible class for stagger animation
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => observer.observe(card));
+}
+
+// Animated number counters for stats
+function setupNumberCounters() {
+    const stats = document.querySelectorAll('.stat-number');
+
+    const animateNumber = (element, target) => {
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+
+        const updateNumber = () => {
+            current += increment;
+            if (current < target) {
+                element.textContent = Math.floor(current).toLocaleString('de-DE');
+                requestAnimationFrame(updateNumber);
+            } else {
+                element.textContent = target.toLocaleString('de-DE');
+            }
+        };
+
+        updateNumber();
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.dataset.animated) {
+                const text = entry.target.textContent;
+                const number = parseInt(text.replace(/\D/g, ''));
+                const suffix = text.replace(/[\d,.\s]/g, '');
+
+                if (!isNaN(number)) {
+                    animateNumber(entry.target, number);
+                    entry.target.dataset.animated = 'true';
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    stats.forEach(stat => observer.observe(stat));
+}
+
+// Smooth scroll for navigation links
+function setupSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '') return;
+
+            e.preventDefault();
+            const target = document.querySelector(href);
+
+            if (target) {
+                const headerOffset = 80;
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
 // Initialize application
 function initApp() {
     console.log('🐾 PrimePet Shop wird initialisiert...');
@@ -274,6 +365,9 @@ function initApp() {
     setupResizeHandler();
     setupKeyboardNavigation();
     setupCookieBanner();
+    setupScrollAnimations();
+    setupNumberCounters();
+    setupSmoothScroll();
 
     // Initialize performance optimizations
     if (typeof initPerformance === 'function') {

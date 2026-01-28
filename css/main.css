@@ -486,18 +486,43 @@ section {
     border-radius: var(--radius-xl);
     text-align: center;
     box-shadow: var(--shadow-md);
-    transition: all var(--transition-base);
+    transition: all var(--transition-slow);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+    z-index: 0;
+}
+
+.category-card:hover::before {
+    opacity: 0.05;
 }
 
 .category-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.02);
     box-shadow: var(--shadow-xl);
 }
 
+.category-card > * {
+    position: relative;
+    z-index: 1;
+}
+
 .category-icon {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     margin: 0 auto var(--spacing-md);
     background: var(--gradient-primary);
     border-radius: 50%;
@@ -506,6 +531,12 @@ section {
     justify-content: center;
     font-size: 2.5rem;
     color: white;
+    transition: all var(--transition-base);
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.1) rotate(5deg);
+    animation: pulse 1s ease-in-out;
 }
 
 .category-title {
@@ -584,8 +615,8 @@ section {
 }
 
 .product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.3);
 }
 
 .product-image {
@@ -594,6 +625,22 @@ section {
     height: 250px;
     overflow: hidden;
     background: var(--bg-secondary);
+}
+
+.product-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.product-card:hover .product-image::before {
+    animation: shimmer 1.5s ease-in-out;
 }
 
 .product-image img {

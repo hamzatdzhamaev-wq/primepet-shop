@@ -528,6 +528,78 @@ select:focus {
 }
 
 /* ===================================
+   New Enhanced Animations
+   =================================== */
+
+/* Shimmer Effect for Loading States */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Float Animation for Decorative Elements */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Gradient Flow for Background Animation */
+@keyframes gradient-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Bounce Arrow for Scroll Indicators */
+@keyframes bounce-arrow {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+/* Number Counter Animation */
+@keyframes number-count {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tilt Effect for Interactive Cards */
+@keyframes tilt {
+    0%, 100% {
+        transform: perspective(1000px) rotateX(0) rotateY(0);
+    }
+    25% {
+        transform: perspective(1000px) rotateX(2deg) rotateY(-2deg);
+    }
+    75% {
+        transform: perspective(1000px) rotateX(-2deg) rotateY(2deg);
+    }
+}
+
+/* ===================================
    Accessibility - Reduced Motion
    =================================== */
 
