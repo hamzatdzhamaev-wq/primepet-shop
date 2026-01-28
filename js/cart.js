@@ -311,11 +311,11 @@ function setupCheckoutModal() {
         if (checkoutOverlay) checkoutOverlay.addEventListener('click', closeCheckout);
         if (checkoutClose) checkoutClose.addEventListener('click', closeCheckout);
 
-        // Handle form submission
+        // Handle form submission (Demo checkout - no payment, no CJ order)
         if (checkoutForm) {
             checkoutForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                processCheckout();
+                processCheckout(false); // sendToCJ = false (demo mode, no payment)
             });
         }
 
@@ -409,7 +409,7 @@ async function sendOrderToCJ(orderData, customerData) {
     }
 }
 
-async function processCheckout() {
+async function processCheckout(sendToCJ = false) {
     const checkoutModal = document.getElementById('checkoutModal');
     const checkoutForm = document.getElementById('checkoutForm');
 
@@ -432,8 +432,13 @@ async function processCheckout() {
     // Save order to history (from email.js)
     saveOrderToHistory(orderData);
 
-    // Send order to CJDropshipping
-    await sendOrderToCJ(orderData, customerData);
+    // Send order to CJDropshipping ONLY if payment was successful
+    if (sendToCJ) {
+        console.log('✅ Payment successful - Sending order to CJDropshipping...');
+        await sendOrderToCJ(orderData, customerData);
+    } else {
+        console.log('ℹ️ Demo checkout - NOT sending to CJDropshipping (no payment made)');
+    }
 
     // Close checkout modal
     if (checkoutModal) {
@@ -560,9 +565,9 @@ function setupPayPalButtons() {
                 // Show success message
                 cart.showNotification('Zahlung erfolgreich! Vielen Dank für Ihre Bestellung.');
 
-                // Process checkout (clear cart, show success modal)
+                // Process checkout with CJ order (payment was successful)
                 setTimeout(() => {
-                    processCheckout();
+                    processCheckout(true); // sendToCJ = true
                 }, 1000);
             });
         },
