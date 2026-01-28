@@ -108,7 +108,7 @@ function createProductCard(product, index) {
     }
 
     // Truncate description for card display
-    const shortDescription = truncateText(product.description, 100);
+    const shortDescription = truncateText(product.description, 50);
 
     card.innerHTML = `
         <div class="product-image">
