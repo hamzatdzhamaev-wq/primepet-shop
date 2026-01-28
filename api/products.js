@@ -22,6 +22,12 @@ function formatProductForShop(cjProduct, customData = {}) {
     const markup = customData.markup || 1.5;
     const sellingPrice = Math.round(costPrice * markup * 100) / 100;
 
+    console.log('DEBUG formatProductForShop:');
+    console.log('- Cost Price:', costPrice);
+    console.log('- Markup from customData:', customData.markup);
+    console.log('- Markup used:', markup);
+    console.log('- Selling Price:', sellingPrice);
+
     // productImage kann String oder Array sein
     let productImage = '';
     if (cjProduct.productImage) {

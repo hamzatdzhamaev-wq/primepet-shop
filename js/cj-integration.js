@@ -188,8 +188,11 @@ function createProductCard(product) {
  */
 async function importProduct(pid) {
     const category = document.getElementById(`category-${pid}`).value;
-    const markup = parseFloat(document.getElementById(`markup-${pid}`).value) / 100 + 1;
+    const markupPercent = parseFloat(document.getElementById(`markup-${pid}`).value);
+    const markup = markupPercent / 100 + 1;
     const badge = document.getElementById(`badge-${pid}`).value;
+
+    console.log('DEBUG Import:', { pid, category, markupPercent, markup, badge });
 
     try {
         const response = await fetch('/api/products?action=import', {
@@ -206,8 +209,12 @@ async function importProduct(pid) {
         });
 
         const data = await response.json();
+        console.log('DEBUG Import response:', data);
 
         if (data.success) {
+            console.log('DEBUG Product to save:', data.product);
+            console.log('DEBUG Product price:', data.product.price);
+
             // Produkt in Datenbank speichern
             const saveResponse = await fetch('/api/shop-products?action=add', {
                 method: 'POST',
@@ -218,6 +225,7 @@ async function importProduct(pid) {
             });
 
             const saveData = await saveResponse.json();
+            console.log('DEBUG Save response:', saveData);
 
             if (saveData.success) {
                 showAlert('success', 'Produkt erfolgreich in Shop importiert!');
