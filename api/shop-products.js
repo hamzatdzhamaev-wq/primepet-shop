@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
 
                 const result = await sql`
                     INSERT INTO products (
-                        name, price, category, description, image,
+                        name, price, category, description, image, images,
                         rating, badge, cj_pid, cj_vid, cj_cost_price, cj_stock
                     ) VALUES (
                         ${product.name},
@@ -71,6 +71,7 @@ module.exports = async (req, res) => {
                         ${product.category},
                         ${product.description || ''},
                         ${product.image || ''},
+                        ${product.images || '[]'},
                         ${product.rating || 5},
                         ${product.badge || ''},
                         ${product.cj_pid || null},
@@ -99,6 +100,7 @@ module.exports = async (req, res) => {
                         category = ${product.category},
                         description = ${product.description || ''},
                         image = ${product.image || ''},
+                        images = ${product.images || '[]'},
                         rating = ${product.rating || 5},
                         badge = ${product.badge || ''},
                         cj_stock = ${product.cj_stock || 0},

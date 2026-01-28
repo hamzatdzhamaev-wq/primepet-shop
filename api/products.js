@@ -41,8 +41,10 @@ function formatProductForShop(cjProduct, customData = {}) {
     console.log('- Markup used:', markup);
     console.log('- Selling Price:', sellingPrice);
 
-    // productImage kann String oder Array sein
+    // productImage kann String oder Array sein - wir speichern ALLE Bilder
     let productImage = '';
+    let productImages = [];
+
     if (cjProduct.productImage) {
         console.log('DEBUG productImage type:', typeof cjProduct.productImage);
         console.log('DEBUG productImage value:', cjProduct.productImage);
@@ -53,22 +55,27 @@ function formatProductForShop(cjProduct, customData = {}) {
             try {
                 const parsed = JSON.parse(cjProduct.productImage);
                 if (Array.isArray(parsed) && parsed.length > 0) {
+                    productImages = parsed;
                     productImage = parsed[0];
-                    console.log('DEBUG: Parsed JSON array, using first element:', productImage);
+                    console.log('DEBUG: Parsed JSON array, found', parsed.length, 'images');
                 } else {
                     productImage = cjProduct.productImage;
+                    productImages = [cjProduct.productImage];
                 }
             } catch (e) {
                 // Kein JSON, verwende als normalen String
                 productImage = cjProduct.productImage;
+                productImages = [cjProduct.productImage];
             }
         } else if (Array.isArray(cjProduct.productImage) && cjProduct.productImage.length > 0) {
+            productImages = cjProduct.productImage;
             productImage = cjProduct.productImage[0];
-            console.log('DEBUG: Array detected, using first element:', productImage);
+            console.log('DEBUG: Array detected, found', cjProduct.productImage.length, 'images');
         }
     }
 
     console.log('DEBUG final productImage:', productImage);
+    console.log('DEBUG final productImages array:', productImages.length, 'images');
 
     // Get VID - if product has variants, take first variant, otherwise use PID
     let vid = cjProduct.vid;
@@ -87,6 +94,7 @@ function formatProductForShop(cjProduct, customData = {}) {
         category: customData.category || category,
         description: cjProduct.description || cjProduct.productNameEn || '',
         image: productImage,
+        images: JSON.stringify(productImages), // All images as JSON array
         rating: 5,
         badge: customData.badge || 'NEU',
         cj_pid: cjProduct.pid,

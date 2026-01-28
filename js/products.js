@@ -155,18 +155,44 @@ function openProductDetail(productId) {
     const modal = document.getElementById('productDetailModal');
     if (!modal) return;
 
-    // Extract images from description
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = product.description || '';
-    const descriptionImages = Array.from(tempDiv.querySelectorAll('img')).map(img => img.src);
+    // Get images from product.images field (if available) or extract from description
+    let allImages = [];
+    let cleanDescription = product.description || '';
 
-    // Remove images from description
-    tempDiv.querySelectorAll('img').forEach(img => img.remove());
-    const cleanDescription = tempDiv.innerHTML;
+    // Try to use images from database first
+    if (product.images) {
+        try {
+            const parsedImages = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
+            if (Array.isArray(parsedImages) && parsedImages.length > 0) {
+                allImages = parsedImages;
+                console.log('Using images from database:', allImages.length, 'images');
+            }
+        } catch (e) {
+            console.warn('Failed to parse product.images:', e);
+        }
+    }
 
-    // Build image gallery
-    const allImages = [product.image, ...descriptionImages].filter(Boolean);
-    console.log('Product images:', allImages.length, allImages);
+    // Fallback: Extract images from description if no images array
+    if (allImages.length === 0) {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = product.description || '';
+        const descriptionImages = Array.from(tempDiv.querySelectorAll('img')).map(img => img.src);
+
+        // Remove images from description
+        tempDiv.querySelectorAll('img').forEach(img => img.remove());
+        cleanDescription = tempDiv.innerHTML;
+
+        allImages = [product.image, ...descriptionImages].filter(Boolean);
+        console.log('Extracted images from description:', allImages.length, 'images');
+    } else {
+        // Clean description of images
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = product.description || '';
+        tempDiv.querySelectorAll('img').forEach(img => img.remove());
+        cleanDescription = tempDiv.innerHTML;
+    }
+
+    console.log('Final image gallery:', allImages.length, allImages);
 
     // Populate media with image gallery
     const mediaContainer = document.getElementById('productDetailMedia');
