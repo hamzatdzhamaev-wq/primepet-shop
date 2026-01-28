@@ -18,11 +18,24 @@ function formatProductForShop(cjProduct, customData = {}) {
     const cjCategory = cjProduct.categoryName || 'Pet Toys';
     const category = categoryMap[cjCategory] || 'hunde';
 
-    const costPrice = parseFloat(cjProduct.sellPrice || 0);
+    // Extract cost price - handle price ranges like "5.37 -- 9.64"
+    let costPrice = 0;
+    const sellPriceStr = String(cjProduct.sellPrice || 0);
+
+    if (sellPriceStr.includes('--')) {
+        // Price range - use the highest value
+        const prices = sellPriceStr.split('--').map(p => parseFloat(p.trim()));
+        costPrice = Math.max(...prices);
+        console.log('DEBUG: Price range detected:', sellPriceStr, '-> Using max:', costPrice);
+    } else {
+        costPrice = parseFloat(sellPriceStr);
+    }
+
     const markup = customData.markup || 1.5;
     const sellingPrice = Math.round(costPrice * markup * 100) / 100;
 
     console.log('DEBUG formatProductForShop:');
+    console.log('- Raw sellPrice:', cjProduct.sellPrice);
     console.log('- Cost Price:', costPrice);
     console.log('- Markup from customData:', customData.markup);
     console.log('- Markup used:', markup);

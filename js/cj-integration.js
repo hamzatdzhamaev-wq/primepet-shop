@@ -123,8 +123,21 @@ function createProductCard(product) {
     }
     const stock = product.availableStock || 999;
     const isAvailable = product.saleStatus === 3 || product.saleStatus === '3';
-    const price = parseFloat(product.sellPrice || 0);
-    const sellingPrice = (price * 1.5).toFixed(2); // 50% Aufschlag
+
+    // Extract price - handle price ranges like "5.37 -- 9.64"
+    let price = 0;
+    const sellPriceStr = String(product.sellPrice || 0);
+
+    if (sellPriceStr.includes('--')) {
+        // Price range - use the highest value
+        const prices = sellPriceStr.split('--').map(p => parseFloat(p.trim()));
+        price = Math.max(...prices);
+    } else {
+        price = parseFloat(sellPriceStr);
+    }
+
+    // Display CJ wholesale price (not retail price)
+    const sellingPrice = price.toFixed(2);
 
     let stockClass = 'stock-available';
     let stockText = 'Auf Lager';
