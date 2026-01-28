@@ -2153,23 +2153,22 @@ section {
     flex-direction: column;
     gap: var(--spacing-md);
     padding: var(--spacing-lg);
+    height: 100%;
 }
 
 .gallery-main {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background: var(--bg-secondary);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    min-height: 400px;
 }
 
 .gallery-main img {
     width: 100%;
     height: auto;
+    max-height: 400px;
     object-fit: contain;
+    display: block;
 }
 
 .gallery-thumbnails {

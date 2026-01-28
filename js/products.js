@@ -166,6 +166,7 @@ function openProductDetail(productId) {
 
     // Build image gallery
     const allImages = [product.image, ...descriptionImages].filter(Boolean);
+    console.log('Product images:', allImages.length, allImages);
 
     // Populate media with image gallery
     const mediaContainer = document.getElementById('productDetailMedia');
@@ -175,7 +176,7 @@ function openProductDetail(productId) {
         mediaContainer.innerHTML = `
             <div class="product-gallery">
                 <div class="gallery-main">
-                    <img id="galleryMainImage" src="${allImages[0]}" alt="${product.name}" style="max-width: 100%; max-height: 500px; object-fit: contain; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);">
+                    <img id="galleryMainImage" src="${allImages[0]}" alt="${product.name}">
                 </div>
                 ${allImages.length > 1 ? `
                 <div class="gallery-thumbnails">
@@ -183,8 +184,7 @@ function openProductDetail(productId) {
                         <img src="${img}"
                              alt="Bild ${idx + 1}"
                              class="gallery-thumb ${idx === 0 ? 'active' : ''}"
-                             onclick="switchGalleryImage('${img}', ${idx})"
-                             style="cursor: pointer;">
+                             onclick="switchGalleryImage('${img}', ${idx})">
                     `).join('')}
                 </div>
                 ` : ''}
