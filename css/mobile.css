@@ -44,8 +44,14 @@ body {
     gap: 0.75rem !important;
 }
 
-.logo img {
-    width: 120px !important;
+.logo-icon {
+    width: 45px !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+.logo-text-img {
+    width: 140px !important;
     height: auto !important;
     object-fit: contain !important;
 }
