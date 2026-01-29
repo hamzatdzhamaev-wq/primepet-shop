@@ -747,6 +747,11 @@
         initPerformance();
     </script>
 
+    <!-- Mobile Floating Wishlist Button -->
+    <button class="mobile-wishlist-btn" id="mobileWishlistBtn" aria-label="Wunschliste">
+        <i class="fas fa-heart"></i>
+    </button>
+
     <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
         <a href="#home" class="bottom-nav-item active" data-section="home">
@@ -807,6 +812,14 @@
 
             sections.forEach(section => observer.observe(section));
         });
+
+        // Mobile Wishlist Button
+        const mobileWishlistBtn = document.getElementById('mobileWishlistBtn');
+        if (mobileWishlistBtn && typeof openWishlist === 'function') {
+            mobileWishlistBtn.addEventListener('click', function() {
+                openWishlist();
+            });
+        }
     </script>
 
 </body>
