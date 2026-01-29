@@ -145,12 +145,13 @@ body {
 }
 
 /* ===================================
-   Floating Cart Button (Bottom Right)
+   Floating Buttons (Left Side Stack)
    =================================== */
+/* Cart Button - Top Left */
 .cart-btn {
     position: fixed !important;
-    bottom: 90px !important;
-    right: 1rem !important;
+    bottom: 160px !important;
+    left: 1rem !important;
     width: 60px !important;
     height: 60px !important;
     border-radius: 50% !important;
@@ -185,6 +186,13 @@ body {
     justify-content: center !important;
     border: none !important;
     cursor: pointer !important;
+}
+
+/* Hide scroll to top button on mobile */
+.scroll-to-top,
+#scrollToTop,
+.back-to-top {
+    display: none !important;
 }
 
 .mobile-wishlist-btn:active {
