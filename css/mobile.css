@@ -3,6 +3,15 @@
    Modern E-Commerce App Experience
    =================================== */
 
+/* Hide mobile-only elements on DESKTOP (larger screens) */
+@media (min-width: 769px) {
+    .mobile-bottom-nav,
+    .mobile-wishlist-btn,
+    .mobile-search {
+        display: none !important;
+    }
+}
+
 /* Only apply on mobile devices */
 @media (max-width: 768px) {
 
