@@ -919,6 +919,116 @@ body {
     }
 }
 
+/* ===================================
+   CRITICAL FIX: Cart Button Visibility
+   Ultra-high specificity override
+   =================================== */
+html body .header .header-content .header-actions button#cartBtn.cart-btn.header-icon-btn,
+html body button#cartBtn,
+body #cartBtn {
+    position: fixed !important;
+    bottom: 160px !important;
+    left: 1rem !important;
+    right: auto !important;
+    top: auto !important;
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+    color: white !important;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
+    font-size: 1.5rem !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translate(0, 0) !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+} /* Close @media (max-width: 768px) from line 6 */
+
+/* ===================================
+   CART BUTTON FIX - ALL SCREEN SIZES
+   Force cart button to be floating on ALL devices
+   =================================== */
+@media (max-width: 900px) {
+    html body .header .header-content .header-actions button#cartBtn.cart-btn.header-icon-btn,
+    html body button#cartBtn,
+    body #cartBtn,
+    #cartBtn {
+        position: fixed !important;
+        bottom: 160px !important;
+        left: 1rem !important;
+        right: auto !important;
+        top: auto !important;
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px !important;
+        min-height: 60px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+        color: white !important;
+        box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
+        font-size: 1.5rem !important;
+        z-index: 999999 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translate(0, 0) !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+}
+
+/* ===================================
+   EMERGENCY FIX - NO MEDIA QUERY
+   This will apply on ALL screen sizes for testing
+   =================================== */
+html body .header .header-content .header-actions button#cartBtn.cart-btn.header-icon-btn,
+html body button#cartBtn,
+body button#cartBtn,
+button#cartBtn,
+#cartBtn {
+    position: fixed !important;
+    bottom: 160px !important;
+    left: 1rem !important;
+    right: auto !important;
+    top: auto !important;
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    border-radius: 50% !important;
+    background: #ff0000 !important; /* RED for visibility test */
+    color: white !important;
+    box-shadow: 0 8px 24px rgba(255, 0, 0, 0.8) !important;
+    font-size: 1.5rem !important;
+    z-index: 9999999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    transform: translate(0, 0) !important;
+    border: 3px solid yellow !important; /* YELLOW border for visibility */
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* ===================================
