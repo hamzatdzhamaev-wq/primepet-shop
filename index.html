@@ -59,12 +59,6 @@
 </head>
 <body>
 
-    <!-- FLOATING CART BUTTON - BRAND NEW -->
-    <button id="floatingCartBtn" style="position: fixed !important; bottom: 160px !important; left: 1rem !important; width: 70px !important; height: 70px !important; border-radius: 50% !important; background: red !important; color: white !important; border: 5px solid yellow !important; z-index: 99999999 !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 2rem !important; cursor: pointer !important; box-shadow: 0 0 30px rgba(255,0,0,0.8) !important;">
-        <i class="fas fa-shopping-cart"></i>
-        <span id="floatingCartBadge" style="position: absolute !important; top: -5px !important; right: -5px !important; background: #00ff00 !important; color: black !important; width: 30px !important; height: 30px !important; border-radius: 50% !important; display: flex !important; align-items: center !important; justify-content: center !important; font-size: 1rem !important; font-weight: bold !important;">0</span>
-    </button>
-
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
@@ -853,30 +847,6 @@
                 }
             });
         }
-
-        // FLOATING CART BUTTON - Make it functional
-        const floatingCartBtn = document.getElementById('floatingCartBtn');
-        const cartModal = document.getElementById('cartModal');
-
-        if (floatingCartBtn && cartModal) {
-            floatingCartBtn.addEventListener('click', function() {
-                cartModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        }
-
-        // Update floating cart badge when cart changes
-        function updateFloatingCartBadge() {
-            const floatingBadge = document.getElementById('floatingCartBadge');
-            if (floatingBadge && typeof cart !== 'undefined') {
-                const itemCount = cart.getItemCount();
-                floatingBadge.textContent = itemCount;
-                floatingBadge.style.display = itemCount > 0 ? 'flex' : 'none';
-            }
-        }
-
-        // Call update on page load
-        setTimeout(updateFloatingCartBadge, 100);
     </script>
 
 </body>
