@@ -482,7 +482,7 @@ section {
 
 .category-card {
     background: white;
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     border-radius: var(--radius-xl);
     text-align: center;
     box-shadow: var(--shadow-md);
@@ -521,15 +521,15 @@ section {
 }
 
 .category-icon {
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
     margin: 0 auto var(--spacing-md);
     background: var(--gradient-primary);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: white;
     transition: all var(--transition-base);
 }
@@ -541,7 +541,7 @@ section {
 
 .category-title {
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
     color: var(--text-primary);
