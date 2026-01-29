@@ -796,6 +796,11 @@ section {
     display: none !important;
 }
 
+/* Hide cookie banner on mobile */
+.cookie-banner {
+    display: none !important;
+}
+
 /* ===================================
    Utilities
    =================================== */
