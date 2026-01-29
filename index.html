@@ -766,11 +766,11 @@
             <i class="fas fa-shopping-bag"></i>
             <span>Shop</span>
         </a>
-        <a href="#wishlist" class="bottom-nav-item" data-section="wishlist">
+        <a href="#" class="bottom-nav-item" data-section="wishlist" id="bottomNavWishlist">
             <i class="fas fa-heart"></i>
             <span>Favoriten</span>
         </a>
-        <a href="#more" class="bottom-nav-item" data-section="more">
+        <a href="#" class="bottom-nav-item" data-section="more" id="bottomNavMore">
             <i class="fas fa-bars"></i>
             <span>Mehr</span>
         </a>
@@ -818,6 +818,33 @@
         if (mobileWishlistBtn && typeof openWishlist === 'function') {
             mobileWishlistBtn.addEventListener('click', function() {
                 openWishlist();
+            });
+        }
+
+        // Bottom Navigation - Favoriten Button
+        const bottomNavWishlist = document.getElementById('bottomNavWishlist');
+        if (bottomNavWishlist && typeof openWishlist === 'function') {
+            bottomNavWishlist.addEventListener('click', function(e) {
+                e.preventDefault();
+                openWishlist();
+            });
+        }
+
+        // Bottom Navigation - Mehr Button (opens mobile menu)
+        const bottomNavMore = document.getElementById('bottomNavMore');
+        const mobileNav = document.querySelector('.nav');
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+
+        if (bottomNavMore && mobileNav) {
+            bottomNavMore.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Toggle mobile menu
+                mobileNav.classList.toggle('active');
+
+                // Also toggle hamburger button state if it exists
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.classList.toggle('active');
+                }
             });
         }
     </script>

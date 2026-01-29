@@ -268,10 +268,12 @@ body {
    Hero Section - App Style
    =================================== */
 .hero {
-    min-height: auto !important;
-    padding: 1.5rem 1rem 2rem 1rem !important;
+    min-height: 400px !important;
+    padding: 1.5rem 1rem 1rem 1rem !important;
     border-radius: 0 0 24px 24px !important;
     margin-bottom: 1.5rem !important;
+    display: flex !important;
+    align-items: flex-end !important;
     /* Keep original background image/gradient */
 }
 
@@ -280,6 +282,8 @@ body {
     padding: 0 !important;
     display: flex !important;
     flex-direction: column !important;
+    width: 100% !important;
+    margin-top: auto !important;
 }
 
 .hero-title {
@@ -300,8 +304,9 @@ body {
     flex-direction: row !important;
     gap: 0.625rem !important;
     justify-content: center !important;
-    margin-top: 1.5rem !important;
+    margin-top: 1rem !important;
     order: 10 !important;
+    padding-bottom: 1rem !important;
 }
 
 .hero-cta .btn {
