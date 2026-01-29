@@ -747,6 +747,12 @@
         initPerformance();
     </script>
 
+    <!-- Mobile Floating Cart Button -->
+    <button class="mobile-cart-btn" id="mobileCartBtn" aria-label="Warenkorb">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="mobileCartBadge">0</span>
+    </button>
+
     <!-- Mobile Floating Wishlist Button -->
     <button class="mobile-wishlist-btn" id="mobileWishlistBtn" aria-label="Wunschliste">
         <i class="fas fa-heart"></i>
@@ -812,6 +818,30 @@
 
             sections.forEach(section => observer.observe(section));
         });
+
+        // Mobile Cart Button
+        const mobileCartBtn = document.getElementById('mobileCartBtn');
+        const cartModal = document.getElementById('cartModal');
+        if (mobileCartBtn && cartModal) {
+            mobileCartBtn.addEventListener('click', function() {
+                cartModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // Update mobile cart badge when cart changes
+        function updateMobileCartBadge() {
+            const mobileBadge = document.getElementById('mobileCartBadge');
+            if (mobileBadge && typeof cart !== 'undefined') {
+                const itemCount = cart.getItemCount();
+                mobileBadge.textContent = itemCount;
+                mobileBadge.style.display = itemCount > 0 ? 'flex' : 'none';
+            }
+        }
+        // Call update on page load and after cart changes
+        if (typeof cart !== 'undefined') {
+            setTimeout(updateMobileCartBadge, 100);
+        }
 
         // Mobile Wishlist Button
         const mobileWishlistBtn = document.getElementById('mobileWishlistBtn');
