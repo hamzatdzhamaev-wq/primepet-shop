@@ -73,11 +73,20 @@ class Wishlist {
 
     // Update wishlist badge
     updateWishlistBadge() {
+        const count = this.getItemCount();
+
+        // Update header badge
         const badge = document.getElementById('wishlistBadge');
         if (badge) {
-            const count = this.getItemCount();
             badge.textContent = count;
             badge.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+        // Update mobile badge
+        const mobileBadge = document.getElementById('mobileWishlistBadge');
+        if (mobileBadge) {
+            mobileBadge.textContent = count;
+            mobileBadge.style.display = count > 0 ? 'flex' : 'none';
         }
     }
 

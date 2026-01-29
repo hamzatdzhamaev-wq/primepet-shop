@@ -100,14 +100,21 @@ class ShoppingCart {
 
     // Update cart badge
     updateCartBadge() {
+        const count = this.getItemCount();
+
+        // Update header badge
         const badge = document.getElementById('cartBadge');
         if (badge) {
-            const count = this.getItemCount();
             badge.textContent = count;
             badge.classList.toggle('update', count > 0);
-
-            // Remove update class after animation
             setTimeout(() => badge.classList.remove('update'), 300);
+        }
+
+        // Update mobile badge
+        const mobileBadge = document.getElementById('mobileCartBadge');
+        if (mobileBadge) {
+            mobileBadge.textContent = count;
+            mobileBadge.style.display = count > 0 ? 'flex' : 'none';
         }
     }
 
