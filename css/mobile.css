@@ -41,6 +41,13 @@ body {
 .logo {
     flex: 1;
     justify-content: flex-start !important;
+    gap: 0.75rem !important;
+}
+
+.logo img {
+    width: 45px !important;
+    height: auto !important;
+    object-fit: contain !important;
 }
 
 .logo-text {
@@ -50,11 +57,56 @@ body {
 
 .header-actions {
     gap: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
 }
 
-/* Hide desktop navigation */
+.header-actions .btn {
+    position: relative !important;
+    width: 44px !important;
+    height: 44px !important;
+}
+
+/* Mobile Navigation Sidebar */
+.mobile-menu-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.25rem !important;
+}
+
 .nav {
-    display: none !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 85% !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    background: white !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2) !important;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 1001 !important;
+    overflow-y: auto !important;
+    display: block !important;
+}
+
+.nav.active {
+    left: 0 !important;
+}
+
+.nav-list {
+    flex-direction: column !important;
+    padding: var(--spacing-xl) var(--spacing-lg) !important;
+}
+
+.nav-link {
+    display: block !important;
+    padding: var(--spacing-md) var(--spacing-sm) !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: var(--spacing-xs) !important;
+    font-size: 1.0625rem !important;
 }
 
 /* Search Bar in Header */
@@ -100,8 +152,14 @@ body {
     color: white !important;
     box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
     font-size: 1.5rem !important;
-    z-index: 999 !important;
+    z-index: 90 !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Wishlist Button in Header */
+.header-actions .wishlist-btn {
+    position: relative !important;
+    z-index: 1 !important;
 }
 
 .cart-btn:active {
@@ -185,9 +243,9 @@ body {
 .hero {
     min-height: auto !important;
     padding: 1.5rem 1rem 2rem 1rem !important;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
     border-radius: 0 0 24px 24px !important;
     margin-bottom: 1.5rem !important;
+    /* Keep original background image/gradient */
 }
 
 .hero-content {
