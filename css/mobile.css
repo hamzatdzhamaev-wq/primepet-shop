@@ -191,8 +191,13 @@ body {
 /* Hide scroll to top button on mobile */
 .scroll-to-top,
 #scrollToTop,
-.back-to-top {
+.back-to-top,
+.back-to-top-btn,
+button[aria-label*="oben"] {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
 }
 
 .mobile-wishlist-btn:active {
