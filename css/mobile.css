@@ -73,10 +73,17 @@ section:last-of-type {
     align-items: center !important;
 }
 
-.header-actions .btn {
+.header-actions .btn:not(.cart-btn) {
     position: relative !important;
     width: 44px !important;
     height: 44px !important;
+}
+
+/* Override for cart button specifically */
+.header-actions #cartBtn {
+    position: fixed !important;
+    bottom: 160px !important;
+    left: 1rem !important;
 }
 
 /* Mobile Navigation Sidebar */
@@ -820,7 +827,7 @@ section {
    =================================== */
 .footer {
     padding: 2rem 0 5rem 0 !important;
-    background: var(--bg-secondary) !important;
+    background: var(--text-primary) !important;
 }
 
 .footer-content {
@@ -832,8 +839,36 @@ section {
     text-align: center !important;
 }
 
+.footer-section h3,
+.footer-title {
+    color: white !important;
+    font-size: 1.125rem !important;
+    margin-bottom: 0.75rem !important;
+}
+
+.footer-links {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 1rem 1.5rem !important;
+}
+
+.footer-links a,
+.footer-description,
+.footer-section p {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.9375rem !important;
+    line-height: 1.6 !important;
+}
+
 .social-links {
     justify-content: center !important;
+}
+
+.social-links a {
+    color: white !important;
+    background: rgba(255, 255, 255, 0.1) !important;
 }
 
 /* Hide admin login link on mobile */
