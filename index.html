@@ -88,7 +88,9 @@
                         <span class="cart-badge" id="cartBadge">0</span>
                     </button>
                     <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menü öffnen">
-                        <i class="fas fa-bars"></i>
+                        <span class="burger-line"></span>
+                        <span class="burger-line"></span>
+                        <span class="burger-line"></span>
                     </button>
                 </div>
             </div>
@@ -773,14 +775,6 @@
             <i class="fas fa-shopping-bag"></i>
             <span>Shop</span>
         </a>
-        <a href="#" class="bottom-nav-item" data-section="wishlist" id="bottomNavWishlist">
-            <i class="fas fa-heart"></i>
-            <span>Favoriten</span>
-        </a>
-        <a href="#" class="bottom-nav-item" data-section="more" id="bottomNavMore">
-            <i class="fas fa-bars"></i>
-            <span>Mehr</span>
-        </a>
     </nav>
 
     <script>
@@ -852,32 +846,6 @@
             });
         }
 
-        // Bottom Navigation - Favoriten Button
-        const bottomNavWishlist = document.getElementById('bottomNavWishlist');
-        if (bottomNavWishlist && typeof openWishlist === 'function') {
-            bottomNavWishlist.addEventListener('click', function(e) {
-                e.preventDefault();
-                openWishlist();
-            });
-        }
-
-        // Bottom Navigation - Mehr Button (opens mobile menu)
-        const bottomNavMore = document.getElementById('bottomNavMore');
-        const mobileNav = document.querySelector('.nav');
-        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-
-        if (bottomNavMore && mobileNav) {
-            bottomNavMore.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Toggle mobile menu
-                mobileNav.classList.toggle('active');
-
-                // Also toggle hamburger button state if it exists
-                if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.toggle('active');
-                }
-            });
-        }
     </script>
 
 </body>

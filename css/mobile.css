@@ -99,11 +99,40 @@ section:last-of-type {
 /* Mobile Navigation Sidebar */
 .mobile-menu-btn {
     display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     width: 44px !important;
     height: 44px !important;
-    font-size: 1.25rem !important;
+    gap: 5px !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    position: relative !important;
+}
+
+.burger-line {
+    width: 24px !important;
+    height: 3px !important;
+    background: var(--text-primary) !important;
+    border-radius: 3px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    display: block !important;
+}
+
+/* Animated Burger Menu - Active State */
+.mobile-menu-btn.active .burger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg) !important;
+}
+
+.mobile-menu-btn.active .burger-line:nth-child(2) {
+    opacity: 0 !important;
+    transform: translateX(-10px) !important;
+}
+
+.mobile-menu-btn.active .burger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg) !important;
 }
 
 .nav {
