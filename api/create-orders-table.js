@@ -15,10 +15,11 @@ module.exports = async (req, res) => {
         return res.status(200).end();
     }
 
-    if (req.method !== 'POST') {
+    // Accept both GET and POST for easy migration
+    if (req.method !== 'POST' && req.method !== 'GET') {
         return res.status(405).json({
             success: false,
-            error: 'Nur POST-Anfragen erlaubt'
+            error: 'Nur POST oder GET-Anfragen erlaubt'
         });
     }
 
