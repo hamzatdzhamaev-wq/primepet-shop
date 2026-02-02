@@ -226,17 +226,61 @@ ${EMAIL_CONFIG.shopUrl}
     `.trim();
 }
 
-// Save Order to History
-function saveOrderToHistory(orderData) {
-    let orderHistory = JSON.parse(localStorage.getItem('primepet_order_history')) || [];
-    orderHistory.unshift(orderData); // Add to beginning
+// Save Order to Database
+async function saveOrderToHistory(orderData) {
+    try {
+        // Prepare order for database
+        const dbOrder = {
+            order_id: orderData.orderId,
+            customer_name: orderData.customer.name,
+            customer_email: orderData.customer.email,
+            customer_phone: orderData.customer.phone || '',
+            customer_address: orderData.customer.address,
+            customer_zip: orderData.customer.zip,
+            customer_city: orderData.customer.city,
+            customer_country: orderData.customer.country || 'DE',
+            items: orderData.items,
+            total_amount: orderData.total,
+            payment_method: 'paypal',
+            payment_status: 'paid',
+            order_status: 'pending',
+            notes: ''
+        };
 
-    // Keep only last 50 orders
+        // Send to database
+        const response = await fetch('/api/shop-orders?action=create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dbOrder)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            console.log('✅ Order saved to database:', result.order.id);
+        } else {
+            console.error('❌ Failed to save order:', result.error);
+            // Fallback: Save to localStorage
+            saveTolocalStorageFallback(orderData);
+        }
+    } catch (error) {
+        console.error('Error saving order to database:', error);
+        // Fallback: Save to localStorage
+        saveTolocalStorageFallback(orderData);
+    }
+}
+
+// Fallback: Save to localStorage if database fails
+function saveTolocalStorageFallback(orderData) {
+    let orderHistory = JSON.parse(localStorage.getItem('primepet_order_history')) || [];
+    orderHistory.unshift(orderData);
     if (orderHistory.length > 50) {
         orderHistory = orderHistory.slice(0, 50);
     }
-
     localStorage.setItem('primepet_order_history', JSON.stringify(orderHistory));
+    console.log('💾 Order saved to localStorage (fallback)');
 }
 
 // Create Order Data from Cart
